@@ -109,7 +109,6 @@ p {
 .scroll-snap-section {
   scroll-snap-align: start;
   min-height: 100vh; /* Faz cada seção ocupar a altura total */
-  min-width: 100vh;
   position: relative; /* Necessário para o z-index e sobreposição */
   opacity: 0;
   transform: translateY(20px);
