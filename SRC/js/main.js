@@ -25,3 +25,14 @@ const observer = new IntersectionObserver(aparecerSeccao, options);
 sections.forEach(section => {
     observer.observe(section);
 });
+
+// Atualiza o ano no footer
+document.getElementById('year').textContent = new Date().getFullYear();
+        
+// Remove o loader quando a página carrega
+window.addEventListener('load', function() {
+    document.querySelector('.page-loader').style.opacity = '0';
+    setTimeout(function() {
+        document.querySelector('.page-loader').style.display = 'none';
+    }, 500);
+});
