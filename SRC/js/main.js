@@ -492,18 +492,21 @@ class AppInitializer {
 }
 
 // Inicialização segura
+// Inicializa os componentes quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
+  // Inicializa o App
   AppInitializer.init();
+  
+  // Inicializa o ScrollCarousel (se os elementos existirem)
+  if (document.querySelector('.scroll-snap-section') && document.querySelector('.scroll-nav-dots')) {
+    new ScrollCarousel();
+  }
+  
+  // Inicializa o SkillPopup (se o elemento existir)
+  if (document.getElementById('skillPopup')) {
+    new SkillPopup();
+  }
 });
-
-
-
-
-
-
-
-
-
 document.getElementById("downloadCv")?.addEventListener("click", function (e) {
   e.preventDefault();
 
