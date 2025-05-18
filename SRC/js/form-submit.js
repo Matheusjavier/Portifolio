@@ -66,40 +66,105 @@ class FormSubmit {
   }
 
   async handleSubmit(e) {
-    if (this.loading || !this.emailJSReady) {
-      console.warn('Tentativa de envio bloqueada:', {
-        loading: this.loading,
-        ready: this.emailJSReady
-      });
-      return;
-    }
+  e.preventDefault();
 
-    this.loading = true;
-    this.showLoading(true);
-
-    try {
-      const response = await emailjs.sendForm(
-        "service_p79vcli", // SEU_SERVICE_ID
-        "template_3ngkdas", // SEU_TEMPLATE_ID
-        this.form
-      );
-      
-      console.log('✉️ E-mail enviado:', response);
-      this.showSuccess();
-      this.form.reset();
-
-    } catch (error) {
-      console.error('Erro no envio:', {
-        status: error.status,
-        message: error.text || error.message
-      });
-      this.showError(error);
-      
-    } finally {
-      this.loading = false;
-      this.showLoading(false);
-    }
+  // Bloqueia envios duplicados e verifica se o serviço está pronto
+  if (this.loading || !this.emailJSReady) {
+    console.warn('Envio bloqueado:', {
+      loading: this.loading,
+      emailJSReady: this.emailJSReady
+    });
+    this.showToast('Aguarde o envio anterior ou recarregue a página', 'warning');
+    return;
   }
+
+  // Validação básica dos campos
+  if (!this.validateForm()) {
+    this.showToast('Preencha todos os campos obrigatórios', 'error');
+    return;
+  }
+
+  this.loading = true;
+  this.showLoading(true);
+  const startTime = Date.now(); // Para medir o tempo de envio
+
+  try {
+    // Envio do formulário com timeout
+    const response = await Promise.race([
+      emailjs.sendForm(
+        "service_p79vcli",
+        "template_3ngkdas", 
+        this.form
+      ),
+      this.timeout(10000) // Timeout de 10 segundos
+    ]);
+
+    console.log('✅ E-mail enviado:', {
+      status: response.status,
+      time: `${(Date.now() - startTime)/1000}s`
+    });
+
+    this.showSuccess();
+    this.form.reset();
+
+    // Feedback visual adicional
+    this.showToast('Mensagem enviada com sucesso!', 'success');
+
+  } catch (error) {
+    console.error('❌ Erro no envio:', {
+      error: error,
+      status: error?.status,
+      message: error?.text || error?.message
+    });
+
+    // Tratamento específico para diferentes tipos de erro
+    if (error.message === 'Timeout') {
+      this.showError(new Error('Tempo limite excedido. Tente novamente'));
+    } else if (error.status === 400) {
+      this.showError(new Error('Dados do formulário inválidos'));
+    } else {
+      this.showError(error);
+    }
+
+  } finally {
+    this.loading = false;
+    this.showLoading(false);
+  }
+}
+
+// Métodos auxiliares adicionais:
+
+validateForm() {
+  const requiredFields = this.form.querySelectorAll('[required]');
+  let isValid = true;
+  
+  requiredFields.forEach(field => {
+    if (!field.value.trim()) {
+      isValid = false;
+      field.classList.add('invalid');
+    } else {
+      field.classList.remove('invalid');
+    }
+  });
+
+  return isValid;
+}
+
+timeout(ms) {
+  return new Promise((_, reject) => 
+    setTimeout(() => reject(new Error('Timeout')), ms)
+  );
+}
+
+showToast(message, type = 'info') {
+  // Implementação básica - pode usar bibliotecas como Toastify.js
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => toast.remove(), 5000);
+}
 
   isEmailJSReady() {
     return typeof emailjs !== 'undefined' && 
@@ -123,8 +188,7 @@ class FormSubmit {
   }
 
   showSuccess() {
-    // Implemente seu feedback UI aqui
-    alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
+    
   }
 
   showError(error) {
