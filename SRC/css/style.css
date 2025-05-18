@@ -1367,7 +1367,7 @@ footer .social-links a:hover {
   .contato-form input,
   .contato-form textarea {
     padding: 0.8rem;
-    font-size: 0.95rem;
+    font-size: 16px; 
   }
 
   .btn {
