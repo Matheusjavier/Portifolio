@@ -355,3 +355,172 @@ if (typeof CSS !== 'undefined' &&
         loadPolyfill();
     }
 }
+class SkillPopup {
+    constructor() {
+        this.popup = document.getElementById('skillPopup');
+        this.closeBtn = document.getElementById('skillPopupClose');
+        this.titleElement = document.getElementById('skillPopupTitle');
+        this.descElement = document.getElementById('skillPopupDesc');
+        this.progressElement = document.getElementById('skillPopupProgress');
+        this.levelElement = document.getElementById('skillPopupLevel');
+        
+        // Dados das habilidades - agora com IDs consistentes
+        this.skillsData = {
+            'csharp': {
+                title: 'C#',
+                description: 'Experiência em desenvolvimento de aplicações desktop e APIs com .NET Core',
+                level: 'Avançado',
+                percentage: 85
+            },
+            'dotnet': {
+                title: '.NET',
+                description: 'Desenvolvimento de soluções empresariais com .NET Framework e .NET Core',
+                level: 'Avançado',
+                percentage: 80
+            },
+            'javascript': {
+                title: 'JavaScript',
+                description: 'Desenvolvimento front-end com ES6+, manipulação de DOM e AJAX',
+                level: 'Intermediário-Avançado',
+                percentage: 75
+            },
+            'html': {
+                title: 'HTML5',
+                description: 'Estruturação semântica de páginas web',
+                level: 'Avançado',
+                percentage: 90
+            },
+            'css': {
+                title: 'CSS3',
+                description: 'Estilização criativa com CSS moderno e animações',
+                level: 'Avançado',
+                percentage: 85
+            },
+            'sql-server': {
+                title: 'SQL Server',
+                description: 'Modelagem de bancos de dados e criação de queries complexas',
+                level: 'Intermediário',
+                percentage: 70
+            },
+            'git': {
+                title: 'Git',
+                description: 'Controle de versão e trabalho em equipe com Git Flow',
+                level: 'Intermediário',
+                percentage: 75
+            },
+            'github': {
+                title: 'GitHub',
+                description: 'Hospedagem de repositórios e colaboração em projetos',
+                level: 'Intermediário',
+                percentage: 70
+            },
+            'bootstrap': {
+                title: 'Bootstrap',
+                description: 'Desenvolvimento responsivo com o framework Bootstrap',
+                level: 'Intermediário',
+                percentage: 65
+            }
+        };
+
+        this.init();
+    }
+
+    init() {
+        // Mapeamento especial para tecnologias com caracteres especiais
+        const skillMapping = {
+            'c#': 'csharp',
+            '.net': 'dotnet',
+            'sql server': 'sql-server'
+        };
+
+        // Adiciona eventos aos elementos de habilidade
+        document.querySelectorAll('.habilidade').forEach(skill => {
+            skill.style.cursor = 'pointer';
+            skill.setAttribute('role', 'button');
+            skill.setAttribute('tabindex', '0');
+            
+            skill.addEventListener('click', () => {
+                let skillName;
+                
+                // Verifica se tem imagem ou ícone
+                if (skill.querySelector('img')) {
+                    skillName = skill.querySelector('img').alt.toLowerCase();
+                } else if (skill.querySelector('i')) {
+                    skillName = skill.querySelector('p').textContent.toLowerCase().trim();
+                } else {
+                    skillName = skill.querySelector('p').textContent.toLowerCase().trim();
+                }
+                
+                // Aplica mapeamento especial se necessário
+                const skillId = skillMapping[skillName] || 
+                               skillName.replace(/[.#]/g, '').replace(/\s+/g, '-');
+                
+                this.showPopup(skillId);
+            });
+            
+            // Adiciona interação por teclado
+            skill.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    skill.click();
+                }
+            });
+        });
+
+        // Fecha o popup ao clicar no botão
+        this.closeBtn.addEventListener('click', () => this.hidePopup());
+
+        // Fecha o popup ao clicar fora do conteúdo
+        this.popup.addEventListener('click', (e) => {
+            if (e.target === this.popup) {
+                this.hidePopup();
+            }
+        });
+
+        // Fecha com ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.popup.classList.contains('active')) {
+                this.hidePopup();
+            }
+        });
+    }
+
+    showPopup(skillId) {
+        const skillData = this.skillsData[skillId];
+        
+        if (!skillData) {
+            console.warn(`Dados não encontrados para a habilidade: ${skillId}`);
+            return;
+        }
+
+        this.titleElement.textContent = skillData.title;
+        this.descElement.textContent = skillData.description;
+        this.levelElement.textContent = skillData.level;
+        
+        // Reset e anima a barra de progresso
+        this.progressElement.style.width = '0';
+        setTimeout(() => {
+            this.progressElement.style.width = `${skillData.percentage}%`;
+        }, 50);
+        
+        this.popup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Foca no botão de fechar para acessibilidade
+        this.closeBtn.focus();
+    }
+
+    hidePopup() {
+        this.popup.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Inicialização com verificação de elementos
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('skillPopup')) {
+        new SkillPopup();
+    } else {
+        console.warn('Elemento do popup de habilidades não encontrado');
+    }
+});

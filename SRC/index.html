@@ -45,10 +45,28 @@
             <h2>Sobre Mim</h2>
             <div class="grid-2-col">
                 <div class="about-content">
-                    <p>Desenvolvedor Full Stack com experiência em desenvolvimento web e soluções empresariais.
-                        Apaixonado por criar sistemas eficientes que resolvem problemas reais.</p>
-                    <p>Atuo desde 2025 na Proclinic Software, participando ativamente do ciclo completo de
-                        desenvolvimento - desde a concepção até a implementação e manutenção de sistemas.</p>
+                    <p><strong>Desenvolvedor Full Stack com expertise em .NET e JavaScript</strong>, migrei da área de
+                        Saúde para Tecnologia aplicando minha visão analítica no desenvolvimento de soluções. Destaques
+                        na Proclinic Software:</p>
+
+                    <ul class="achievement-list">
+                        <li>Otimização de processos internos (30% de ganho de eficiência)</li>
+                        <li>Desenvolvimento de 4 sistemas corporativos de ponta a ponta</li>
+                        <li>Integração de APIs RESTful para sistemas legados</li>
+                    </ul>
+
+                    <p>Stack principal: <strong>C#</strong>, <strong>.NET Core</strong>, <strong>SQL Server</strong>
+                        (backend) e <strong>JavaScript</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>
+                        (frontend).</p>
+
+                    <ul class="education-list">
+                        <li>Análise e Desenvolvimento de Sistemas - Fatec</li>
+                        <li>Certificações em desenvolvimento fullstack</li>
+                    </ul>
+
+                    <p class="cta">Disponível para discutir como posso agregar à sua equipe:
+                        <a href="#contato" class="cta-link">Contato</a>
+                    </p>
                 </div>
                 <div class="about-highlights">
                     <div class="highlight-card">
@@ -211,13 +229,26 @@
         <div class="container">
             <p>&copy; <span id="year"></span> Matheus Javier. Todos os direitos reservados.</p>
             <div class="social-links">
-                <a href="https://linkedin.com/in/matheus-javier" target="_blank"><i
-                        class="fab fa-linkedin-in"></i></a>
+                <a href="https://linkedin.com/in/matheus-javier" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                 <a href="https://github.com/Matheusjavier" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="mailto:matheusjnp14@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </footer>
+    <div class="skill-popup" id="skillPopup">
+        <div class="skill-popup-content">
+            <button class="skill-popup-close" id="skillPopupClose">&times;</button>
+            <h3 id="skillPopupTitle">Título da Habilidade</h3>
+            <p id="skillPopupDesc">Descrição do seu nível e experiência</p>
+
+            <div class="skill-level">
+                <div class="skill-level-bar">
+                    <div class="skill-level-progress" id="skillPopupProgress"></div>
+                </div>
+                <div class="skill-level-text" id="skillPopupLevel">Avançado</div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
 </body>
