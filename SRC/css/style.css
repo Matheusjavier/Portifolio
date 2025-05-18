@@ -231,44 +231,38 @@ p {
 }
 
 .scroll-snap-container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  position: relative;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y proximity;
 }
 
 .scroll-snap-section {
-  scroll-snap-align: start;
-  min-height: 100vh;
-  position: relative;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out, z-index 0s 0.5s;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    scroll-snap-align: start;
+    min-height: 100vh;
+    position: relative;
 }
 
-.scroll-snap-section.aparecer {
-  opacity: 1;
-  transform: translateY(0);
+footer.scroll-snap-section {
+    min-height: unset;
+    height: auto;
+    padding: 2rem 0;
 }
 
-.scroll-snap-section.fading-out {
-  opacity: 0;
-  z-index: 0;
-  transition: opacity 0.5s ease-in-out, z-index 0s 0s;
+.skill-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
 }
 
-.scroll-snap-section.fading-in {
-  z-index: 2;
-}
-
-.bg-light {
-  background-color: white;
-  display: flex;
-  flex-grow: 1;
+.scroll-nav-dots {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
 }
 
 /* ===== HEADER HERO ===== */
@@ -1255,71 +1249,170 @@ footer .social-links a:hover {
     transform: translateY(2px);
 }
 
-/* ===== RESPONSIVIDADE ===== */
+/* ==================== MEDIA QUERIES AJUSTADAS ==================== */
+
+/* Tablet (768px para baixo) */
 @media (max-width: 768px) {
-  .grid-2-col,
-  .formacao-grid,
-  .contato-content {
+  /* Ajustes para a seção Sobre */
+  #sobre .grid-2-col {
     grid-template-columns: 1fr;
-    width: 100%;
+    gap: 2rem;
+    padding: 0 1rem;
   }
-  #formacao {
-    margin-top: 1rem;
+
+  #sobre .about-content::before {
+    display: none; /* Remove a linha vertical em tablets */
+  }
+
+  #sobre .about-highlights {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #sobre .highlight-card {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Ajustes para a seção Experiência */
+  #experiencia .container {
+    width: 90%;
+    padding: 4rem 1rem;
+  }
+
+  .timeline {
+    padding-left: 0;
   }
 
   .timeline::before {
-    left: 0.3rem;
+    left: 0;
+  }
+
+  .timeline-item {
+    padding-left: 1.5rem;
+    margin-bottom: 2.5rem;
   }
 
   .timeline-date {
-    left: -1.5rem;
+    position: relative;
+    left: 0;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+  /* Ajustes para a seção Contato */
+  #contato .container {
+    padding: 4rem 1rem;
   }
 
-  .scroll-nav-dots {
+  .contato-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .contato-info, 
+  .contato-form {
+    width: 100%;
+  }
+
+  .info-item {
+    font-size: 0.95rem;
+  }
+   .scroll-nav-dots {
     display: none;
   }
 
-  .hero-title span:first-child {
-    animation: none;
-    border-right: none;
-    white-space: normal;
-  }
-
-  .highlight-card {
-    transform-style: flat;
-  }
-
-  .btn-primary:hover {
-    transform: none;
-  }
-
-  .theme-toggle {
-    top: 1rem;
-    right: 1rem;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-  }
-  .about-content {
-        padding: 1.5rem;
-    }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+/* Celulares (480px para baixo) */
+@media (max-width: 480px) {
+ 
+   .scroll-nav-dots {
+    display: none;
   }
 
-  *,
-  ::before,
-  ::after {
-    animation-delay: -1ms !important;
-    transition-delay: -1ms !important;
-    animation-duration: 1ms !important;
-    transition-duration: 1ms !important;
+  #sobre {
+    padding: 4rem 1rem;
   }
-  .skill-popup-content {
-    width: 95%;
+
+  #sobre h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  #sobre .highlight-card {
     padding: 1.5rem;
+  }
+
+  /* Ajustes para Experiência */
+  #experiencia {
+    padding: 3rem 0;
+  }
+
+  .timeline-content {
+    padding: 1.25rem;
+  }
+
+  .timeline-content h3 {
+    font-size: 1.25rem;
+  }
+
+  .timeline-content ul {
+    padding-left: 1.2rem;
+  }
+    #contato {
+    padding: 3rem 1rem;
+  }
+
+  .contato-form input,
+  .contato-form textarea {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .info-item i {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+}
+
+/* Celulares pequenos (360px para baixo) */
+@media (max-width: 360px) {
+  /* Ajustes extras para Sobre */
+  #sobre .grid-2-col {
+    gap: 1.5rem;
+  }
+
+  #sobre .highlight-card {
+    padding: 1.25rem;
+  }
+
+  /* Ajustes para Experiência */
+  .timeline-item {
+    padding-left: 1rem;
+  }
+
+  .timeline-content {
+    padding: 1rem;
+  }
+}
+
+/* Orientação paisagem */
+@media (orientation: landscape) and (max-width: 768px) {
+  #sobre,
+  #experiencia {
+    padding: 3rem 0;
+  }
+
+  .scroll-snap-section {
+    min-height: 120vh;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 }
