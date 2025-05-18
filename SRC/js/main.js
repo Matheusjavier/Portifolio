@@ -4,27 +4,42 @@ class ScrollCarousel {
         this.dotsContainer = document.querySelector('.scroll-nav-dots');
         this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints;
         this.lastScrollTime = 0;
-        this.scrollDelay = 800;
+        this.scrollDelay = 1000; // Aumentei o delay para melhor experiência
         this.yearElement = document.getElementById('year');
         this.pageLoader = document.querySelector('.page-loader');
+        this.scrollLock = false;
+        this.currentIndex = 0;
+        this.scrollTimeout = null;
 
-        // Garante que os elementos necessários existem antes de prosseguir
-        if (this.sections && this.dotsContainer && this.yearElement && this.pageLoader) {
-            this.init();
-        } else {
-            console.error('Elementos HTML necessários não encontrados. O carrossel não será inicializado.');
-            this.removeLoader(); // Remove o loader mesmo se o carrossel não inicializar
-        }
+        this.init();
     }
 
     init() {
+        if (!this.validateElements()) {
+            console.error('Elementos necessários não encontrados. Desativando funcionalidades avançadas.');
+            this.setupFallback();
+            return;
+        }
+
         this.updateYear();
-        this.removeLoader();
+        this.setupLoader();
         this.createNavigationDots();
-        this.setupScrollSnap();
+        this.setupScrollBehavior();
         this.setupObservers();
         this.addEventListeners();
-        this.updateActiveDot();
+        this.updateActiveStates();
+    }
+
+    validateElements() {
+        return this.sections.length > 0 && 
+               this.dotsContainer && 
+               this.yearElement && 
+               this.pageLoader;
+    }
+
+    setupFallback() {
+        this.updateYear();
+        this.removeLoader();
     }
 
     updateYear() {
@@ -33,33 +48,54 @@ class ScrollCarousel {
         }
     }
 
-    removeLoader() {
+    setupLoader() {
+        // Garante que o loader seja removido mesmo se houver erros
         window.addEventListener('load', () => {
-            if (this.pageLoader) { // Verifica novamente se o elemento existe
-                this.pageLoader.style.opacity = '0';
-                setTimeout(() => {
-                    this.pageLoader.style.display = 'none';
-                }, 500);
-            }
+            setTimeout(() => {
+                this.removeLoader();
+            }, 1000); // Tempo mínimo de exibição do loader
         });
+
+        // Fallback caso o evento load não dispare
+        setTimeout(() => {
+            this.removeLoader();
+        }, 3000);
+    }
+
+    removeLoader() {
+        if (this.pageLoader) {
+            this.pageLoader.style.opacity = '0';
+            setTimeout(() => {
+                this.pageLoader.style.display = 'none';
+            }, 500);
+        }
     }
 
     createNavigationDots() {
         this.sections.forEach((section, index) => {
-            const dot = document.createElement('div');
+            const dot = document.createElement('button');
             dot.className = 'scroll-nav-dot';
             dot.dataset.index = index;
             dot.setAttribute('aria-label', `Ir para a seção ${index + 1}`);
+            dot.setAttribute('role', 'button');
+            dot.setAttribute('tabindex', '0');
 
             dot.addEventListener('click', () => {
                 this.scrollToSection(index);
+            });
+
+            dot.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.scrollToSection(index);
+                }
             });
 
             this.dotsContainer.appendChild(dot);
         });
     }
 
-    setupScrollSnap() {
+    setupScrollBehavior() {
         const container = document.querySelector('.scroll-snap-container');
         if (container) {
             if (!this.isTouchDevice) {
@@ -67,170 +103,255 @@ class ScrollCarousel {
             } else {
                 container.style.scrollBehavior = 'smooth';
             }
-        } else {
-            console.warn('Elemento .scroll-snap-container não encontrado. Scroll-snap não aplicado.');
         }
     }
 
     setupObservers() {
         const observerOptions = {
-            threshold: [0, 0.25, 0.75, 1] // Observa em diferentes pontos da entrada/saída
+            threshold: [0.1, 0.5, 0.9]
         };
 
-        const sectionObserver = new IntersectionObserver((entries) => {
+        this.sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const target = entry.target;
+                const index = [...this.sections].indexOf(target);
 
                 if (entry.isIntersecting) {
-                    target.classList.add('fading-in', 'aparecer', 'active'); // Adiciona 'aparecer' ao entrar
-                    target.classList.remove('fading-out');
+                    this.handleSectionAppear(target, index);
                 } else {
-                    target.classList.add('fading-out'); // Adiciona classe ao sair
-                    target.classList.remove('fading-in', 'active');
-                    // Não removemos 'aparecer' aqui para que a animação de entrada seja mantida se a seção voltar à tela parcialmente
+                    this.handleSectionDisappear(target);
                 }
             });
         }, observerOptions);
 
-        // Observer para atualização dos dots (mantém como está)
-        const dotObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const index = [...this.sections].indexOf(entry.target);
-                const dot = this.dotsContainer.children[index];
-
-                if (dot) {
-                    if (entry.isIntersecting) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-
         this.sections.forEach(section => {
-            sectionObserver.observe(section);
-            dotObserver.observe(section);
+            this.sectionObserver.observe(section);
         });
+    }
+
+    handleSectionAppear(section, index) {
+        section.classList.add('fading-in', 'aparecer', 'active');
+        section.classList.remove('fading-out');
+        this.currentIndex = index;
+        
+        // Atualiza acessibilidade
+        section.setAttribute('aria-hidden', 'false');
+    }
+
+    handleSectionDisappear(section) {
+        section.classList.add('fading-out');
+        section.classList.remove('fading-in', 'active');
+        section.setAttribute('aria-hidden', 'true');
     }
 
     addEventListeners() {
+        // Navegação por teclado
         document.addEventListener('keydown', (e) => {
+            if (this.scrollLock) return;
+            
             const now = Date.now();
             if (now - this.lastScrollTime < this.scrollDelay) return;
 
-            if (e.key === 'ArrowDown') {
-                this.scrollToNext();
-                this.lastScrollTime = now;
-            } else if (e.key === 'ArrowUp') {
-                this.scrollToPrev();
-                this.lastScrollTime = now;
+            switch (e.key) {
+                case 'ArrowDown':
+                case 'PageDown':
+                    e.preventDefault();
+                    this.scrollToNext();
+                    this.lastScrollTime = now;
+                    break;
+                case 'ArrowUp':
+                case 'PageUp':
+                    e.preventDefault();
+                    this.scrollToPrev();
+                    this.lastScrollTime = now;
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    this.scrollToSection(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    this.scrollToSection(this.sections.length - 1);
+                    break;
             }
         });
 
-        window.addEventListener('wheel', (e) => {
-            if (e.deltaY < -50 || e.deltaY > 50) {
-                this.lastScrollTime = Date.now();
-            }
-        }, { passive: true });
+        // Navegação por wheel/touch com throttle
+        window.addEventListener('wheel', this.handleWheel.bind(this), { passive: false });
+        window.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
 
-        window.addEventListener('scroll', this.throttle(this.updateActiveDot.bind(this), 100));
+        // Atualiza estados ativos
+        window.addEventListener('scroll', this.throttle(this.updateActiveStates.bind(this), 100));
+    }
+
+    handleWheel(e) {
+        if (this.scrollLock || Math.abs(e.deltaY) < 5) return;
+        
+        e.preventDefault();
+        
+        if (e.deltaY > 0) {
+            this.scrollToNext();
+        } else {
+            this.scrollToPrev();
+        }
+    }
+
+    handleTouchMove(e) {
+        if (this.scrollLock || !this.isTouchDevice) return;
+        
+        // Implementação básica para dispositivos touch
+        // Poderia ser aprimorado com detecção de gestos
     }
 
     scrollToSection(index) {
-        if (index >= 0 && index < this.sections.length) {
-            this.sections[index].scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+        if (this.scrollLock || index < 0 || index >= this.sections.length) return;
+        
+        this.scrollLock = true;
+        this.currentIndex = index;
+
+        this.sections[index].scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+
+        // Libera o scroll após a animação
+        clearTimeout(this.scrollTimeout);
+        this.scrollTimeout = setTimeout(() => {
+            this.scrollLock = false;
+        }, this.scrollDelay);
     }
 
     scrollToNext() {
-        const currentIndex = this.getCurrentSectionIndex();
-        if (currentIndex < this.sections.length - 1) {
-            this.scrollToSection(currentIndex + 1);
-        }
+        const nextIndex = Math.min(this.currentIndex + 1, this.sections.length - 1);
+        this.scrollToSection(nextIndex);
     }
 
     scrollToPrev() {
-        const currentIndex = this.getCurrentSectionIndex();
-        if (currentIndex > 0) {
-            this.scrollToSection(currentIndex - 1);
-        }
+        const prevIndex = Math.max(this.currentIndex - 1, 0);
+        this.scrollToSection(prevIndex);
     }
 
-    getCurrentSectionIndex() {
-        const scrollPosition = window.scrollY + (window.innerHeight / 3);
-        for (let i = 0; i < this.sections.length; i++) {
-            const section = this.sections[i];
-            if (scrollPosition >= section.offsetTop &&
-                scrollPosition < section.offsetTop + section.offsetHeight) {
-                return i;
+    updateActiveStates() {
+        if (this.scrollLock) return;
+        
+        const scrollPosition = window.scrollY + (window.innerHeight / 2);
+        let newIndex = 0;
+        let minDistance = Infinity;
+
+        // Encontra a seção mais próxima do centro da tela
+        this.sections.forEach((section, index) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionCenter = sectionTop + (sectionHeight / 2);
+            const distance = Math.abs(scrollPosition - sectionCenter);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                newIndex = index;
             }
-        }
-        return 0;
-    }
+        });
 
-    updateActiveDot() {
-        const currentIndex = this.getCurrentSectionIndex();
-        if (this.dotsContainer && this.dotsContainer.children) { // Verifica se dotsContainer e children existem
-            [...this.dotsContainer.children].forEach((dot, index) => {
-                if (index === currentIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
+        if (newIndex !== this.currentIndex) {
+            this.currentIndex = newIndex;
+            this.updateDots();
         }
     }
 
-    throttle(fn, wait) {
-        let time = Date.now();
-        return function () {
-            if ((time + wait - Date.now()) < 0) {
-                fn();
-                time = Date.now();
+    updateDots() {
+        if (!this.dotsContainer) return;
+        
+        Array.from(this.dotsContainer.children).forEach((dot, index) => {
+            if (index === this.currentIndex) {
+                dot.classList.add('active');
+                dot.setAttribute('aria-current', 'true');
+            } else {
+                dot.classList.remove('active');
+                dot.removeAttribute('aria-current');
+            }
+        });
+    }
+
+    throttle(func, limit) {
+        let lastFunc;
+        let lastRan;
+        
+        return function() {
+            const context = this;
+            const args = arguments;
+            
+            if (!lastRan) {
+                func.apply(context, args);
+                lastRan = Date.now();
+            } else {
+                clearTimeout(lastFunc);
+                lastFunc = setTimeout(function() {
+                    if ((Date.now() - lastRan) >= limit) {
+                        func.apply(context, args);
+                        lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - lastRan));
             }
         };
     }
 }
 
+// Inicialização com tratamento de erros
 document.addEventListener('DOMContentLoaded', () => {
-    // Verifica se há seções para ativar o carrossel
-    if (document.querySelectorAll('.scroll-snap-section').length > 0) {
-        try {
+    try {
+        if (document.querySelectorAll('.scroll-snap-section').length > 0) {
             new ScrollCarousel();
-        } catch (error) {
-            console.error('Erro ao inicializar ScrollCarousel:', error);
+        } else {
+            // Fallback para páginas sem seções de scroll-snap
+            const yearElement = document.getElementById('year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+            
+            const pageLoader = document.querySelector('.page-loader');
+            if (pageLoader) {
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        pageLoader.style.opacity = '0';
+                        setTimeout(() => {
+                            pageLoader.style.display = 'none';
+                        }, 500);
+                    }, 1000);
+                });
+            }
         }
-    } else {
-        const yearElement = document.getElementById('year');
-        if (yearElement) {
-            yearElement.textContent = new Date().getFullYear();
-        }
+    } catch (error) {
+        console.error('Erro ao inicializar ScrollCarousel:', error);
+        
+        // Garante que o loader seja removido mesmo com erro
         const pageLoader = document.querySelector('.page-loader');
         if (pageLoader) {
-            window.addEventListener('load', () => {
-                pageLoader.style.opacity = '0';
-                setTimeout(() => {
-                    pageLoader.style.display = 'none';
-                }, 500);
-            });
+            pageLoader.style.display = 'none';
         }
     }
 });
 
-// Polyfill opcional para navegadores antigos
-if (typeof CSS.supports === 'function' && !CSS.supports('scroll-snap-align', 'start')) {
-    import('scrollsnap-polyfill').then(module => {
-        const container = document.querySelector('.scroll-snap-container');
-        if (container) {
-            new module.default(container, {
-                snapDestinationY: '100vh'
-            }).init();
-        }
-    }).catch(error => {
-        console.error('Falha ao carregar polyfill:', error);
-    });
+// Polyfill para scroll-snap (carregamento condicional)
+if (typeof CSS !== 'undefined' && 
+    typeof CSS.supports === 'function' && 
+    !CSS.supports('scroll-snap-align', 'start')) {
+    
+    const loadPolyfill = () => {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/scrollsnap-polyfill@latest/dist/scrollsnap-polyfill.min.js';
+        script.onload = () => {
+            const container = document.querySelector('.scroll-snap-container');
+            if (container) {
+                scrollsnapPolyfill();
+            }
+        };
+        script.onerror = () => {
+            console.warn('Falha ao carregar o polyfill de scroll-snap');
+        };
+        document.head.appendChild(script);
+    };
+
+    // Carrega apenas se necessário
+    if (document.querySelector('.scroll-snap-container')) {
+        loadPolyfill();
+    }
 }
