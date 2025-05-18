@@ -486,9 +486,10 @@ p {
 #sobre .grid-2-col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2.5rem;
-  max-width: 900px;
+  gap: 5rem;
+  max-width:1200px;
   margin-bottom: 3rem;
+
 }
 
 .about-content {
@@ -1215,6 +1216,43 @@ footer .social-links a:hover {
 .skill-popup p {
   color: var(--text-light);
   margin-bottom: 1.5rem;
+}
+/* Estilo do link de download */
+.download-link {
+    color: var(--primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.download-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width var(--transition-fast);
+}
+
+.download-link:hover {
+    color: var(--primary-light);
+}
+
+.download-link:hover::after {
+    width: 100%;
+}
+
+.fa-file-download {
+    color: var(--primary);
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+.download-link:hover .fa-file-download {
+    transform: translateY(2px);
 }
 
 /* ===== RESPONSIVIDADE ===== */

@@ -196,60 +196,69 @@
                             <a href="mailto:matheusjnp14@gmail.com">matheusjnp14@gmail.com</a>
                         </div>
                         <div class="info-item">
-                            <i class="fas fa-phone"></i>
-                            <a href="tel:+5511954180749">(11) 95418-0749</a>
+                            <i class="fab fa-whatsapp"></i> <!-- Mudei o ícone para WhatsApp -->
+                            <a href="https://wa.me/5511954180749" target="_blank">(11) 95418-0749</a>
                         </div>
                         <div class="info-item">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>São Bernardo do Campo - SP</span>
                         </div>
+                         <div class="info-item">
+                            <i class="fas fa-file-download"></i>
+                            <a href="#" id="downloadCv" class="download-link">Download Currículo (PDF)</a>
+                        </div>
                     </div>
 
-                    <form class="contato-form">
+                    <form class="contato-form" action="https://formsubmit.co/matheusjnp14@gmail.com" method="POST">
+                        <!-- Campos ocultos para configuração -->
+                        <input type="hidden" name="_subject" value="Novo contato do portfólio">
+                        <input type="hidden" name="_template" value="table"> <!-- Formato organizado -->
+                        <input type="text" name="_honey" style="display:none"> <!-- Anti-spam -->
+
                         <div class="form-group">
-                            <input type="text" placeholder="Seu nome" required>
+                            <input type="text" name="name" placeholder="Seu nome completo" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Seu e-mail" required>
+                            <input type="email" name="email" placeholder="Seu e-mail" required>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Sua mensagem" rows="5" required></textarea>
+                            <textarea name="message" placeholder="Sua mensagem" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
                     </form>
                 </div>
             </div>
         </section>
-    </div>
 
-    <div class="scroll-nav-dots">
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="year"></span> Matheus Javier. Todos os direitos reservados.</p>
-            <div class="social-links">
-                <a href="https://linkedin.com/in/matheus-javier" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/Matheusjavier" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="mailto:matheusjnp14@gmail.com"><i class="fas fa-envelope"></i></a>
-            </div>
+        <div class="scroll-nav-dots">
         </div>
-    </footer>
-    <div class="skill-popup" id="skillPopup">
-        <div class="skill-popup-content">
-            <button class="skill-popup-close" id="skillPopupClose">&times;</button>
-            <h3 id="skillPopupTitle">Título da Habilidade</h3>
-            <p id="skillPopupDesc">Descrição do seu nível e experiência</p>
 
-            <div class="skill-level">
-                <div class="skill-level-bar">
-                    <div class="skill-level-progress" id="skillPopupProgress"></div>
+        <footer>
+            <div class="container">
+                <p>&copy; <span id="year"></span> Matheus Javier. Todos os direitos reservados.</p>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/matheus-javier" target="_blank"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/Matheusjavier" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="mailto:matheusjnp14@gmail.com"><i class="fas fa-envelope"></i></a>
                 </div>
-                <div class="skill-level-text" id="skillPopupLevel">Avançado</div>
+            </div>
+        </footer>
+        <div class="skill-popup" id="skillPopup">
+            <div class="skill-popup-content">
+                <button class="skill-popup-close" id="skillPopupClose">&times;</button>
+                <h3 id="skillPopupTitle">Título da Habilidade</h3>
+                <p id="skillPopupDesc">Descrição do seu nível e experiência</p>
+
+                <div class="skill-level">
+                    <div class="skill-level-bar">
+                        <div class="skill-level-progress" id="skillPopupProgress"></div>
+                    </div>
+                    <div class="skill-level-text" id="skillPopupLevel">Avançado</div>
+                </div>
             </div>
         </div>
     </div>
-
     <script src="js/main.js"></script>
 </body>
 
