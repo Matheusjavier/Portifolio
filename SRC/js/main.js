@@ -254,11 +254,11 @@ class SkillPopup {
         this.levelElement = document.getElementById('skillPopupLevel');
         
         this.skillsData = {
-            'csharp': { title: 'C#', description: 'Experiência em desenvolvimento de aplicações desktop e APIs com .NET Core', level: 'Avançado', percentage: 85 },
-            'dotnet': { title: '.NET', description: 'Desenvolvimento de soluções empresariais com .NET Framework e .NET Core', level: 'Avançado', percentage: 80 },
+            'csharp': { title: 'C#', description: 'Experiência em desenvolvimento de aplicações desktop e APIs com .NET Core', level: 'Intermediário', percentage: 65 },
+            'dotnet': { title: '.NET', description: 'Desenvolvimento de soluções empresariais com .NET Framework e .NET Core', level: 'Intermediário', percentage: 60 },
             'javascript': { title: 'JavaScript', description: 'Desenvolvimento front-end com ES6+, manipulação de DOM e AJAX', level: 'Intermediário-Avançado', percentage: 75 },
-            'html': { title: 'HTML5', description: 'Estruturação semântica de páginas web', level: 'Avançado', percentage: 90 },
-            'css': { title: 'CSS3', description: 'Estilização criativa com CSS moderno e animações', level: 'Avançado', percentage: 85 },
+            'html': { title: 'HTML5', description: 'Estruturação semântica de páginas web', level: 'Avançado', percentage: 95 },
+            'css': { title: 'CSS3', description: 'Estilização criativa com CSS moderno e animações', level: 'Avançado', percentage: 90 },
             'sql-server': { title: 'SQL Server', description: 'Modelagem de bancos de dados e criação de queries complexas', level: 'Intermediário', percentage: 70 },
             'git': { title: 'Git', description: 'Controle de versão e trabalho em equipe com Git Flow', level: 'Intermediário', percentage: 75 },
             'github': { title: 'GitHub', description: 'Hospedagem de repositórios e colaboração em projetos', level: 'Intermediário', percentage: 70 },
