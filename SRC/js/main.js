@@ -400,163 +400,110 @@ class SkillPopup {
     document.body.style.overflow = "";
   }
 }
-
-/**
- * =============================================
- * CONTACT FORM - Formulário de contato
- * =============================================
- */
-// Adicione no seu HTML <head>:
-// <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-class FormSubmit {
-  constructor(form) {
-    this.form = form;
-    this.submitBtn = this.form.querySelector('button[type="submit"]');
-    this.init();
-  }
-
-  init() {
-    // Inicializa o EmailJS primeiro
-    emailjs.init("XDxzYQgieAmqTtZwR").then(() => {
-      this.setupFormSubmit();
-    }).catch(error => {
-      console.error("Falha ao inicializar EmailJS:", error);
-      this.submitBtn.disabled = true;
-      this.submitBtn.textContent = "Formulário indisponível";
-    });
-  }
-
-  async handleSubmit(e) {
-    e.preventDefault();
-
-    this.showLoadingState();
-
-    try {
-      // Corrigido: método sendForm com parâmetros corretos
-      await emailjs.sendForm(
-        "service_p79vcli", // Service ID
-        "template_3ngkdas", // Template ID
-        this.form
-      );
-
-      this.showSuccessFeedback();
-      this.form.reset();
-    } catch (error) {
-      console.error("Erro no envio:", error);
-      this.showErrorFeedback();
-    } finally {
-      this.resetButtonState();
-    }
-  }
-
-  showLoadingState() {
-    this.submitBtn.innerHTML = '<span class="loader"></span> Enviando...';
-    this.submitBtn.disabled = true;
-  }
-
-  resetButtonState() {
-    this.submitBtn.textContent = "Enviar Mensagem";
-    this.submitBtn.disabled = false;
-  }
-
-  showSuccessFeedback() {
-    const successDiv = document.createElement("div");
-    successDiv.className = "form-success";
-    successDiv.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-      </svg>
-      <p>Mensagem enviada com sucesso! Responderei em breve.</p>
-    `;
-
-    this.form.insertAdjacentElement("afterend", successDiv);
-    setTimeout(() => successDiv.remove(), 5000);
-  }
-
-  showErrorFeedback() {
-    alert(
-      "Ops! Ocorreu um erro. Você pode me contatar diretamente por:\n\nEmail: matheusjnp14@gmail.com\nWhatsApp: [seu número]"
-    );
-  }
-
-  setupFormSubmit() {
-    this.form.addEventListener("submit", (e) => this.handleSubmit(e));
-  }
-}
-
-// Uso:
-document.addEventListener("DOMContentLoaded", () => {
-  const contactForm = document.querySelector(".contato-form");
-  if (contactForm) {
-    new FormSubmit(contactForm);
-  }
-});
 /**
  * =============================================
  * INICIALIZAÇÃO DA APLICAÇÃO
  * =============================================
  */
 class AppInitializer {
-  static init() {
-    this.updateCopyrightYear();
-    this.setupLoader();
-    this.initComponents();
-    this.loadPolyfillIfNeeded();
+  static async init() {
+    try {
+      console.log('🚀 Iniciando aplicação...');
+      
+      // 1. Carrega o EmailJS primeiro
+      await this.loadEmailJS();
+      
+      // 2. Inicializa componentes básicos
+      this.initBasicComponents();
+      
+      // 3. Inicializa o formulário
+      await this.initForm();
+      
+      console.log('🎉 Aplicação pronta');
+    } catch (error) {
+      console.error('❌ Erro na inicialização:', error);
+    } finally {
+      // Garante que o loader seja removido
+      this.removeLoader();
+    }
   }
 
-  static updateCopyrightYear() {
-    const yearElement = document.querySelector("#current-year");
+  static async loadEmailJS() {
+    if (typeof emailjs !== 'undefined') return;
+    
+    console.log('📦 Carregando EmailJS...');
+    await this.loadScript('https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js');
+  }
+
+  static initBasicComponents() {
+    // Atualiza o ano de copyright
+    const yearElement = document.querySelector('[data-current-year]');
     if (yearElement) {
       yearElement.textContent = new Date().getFullYear();
     }
   }
 
-  static setupLoader() {
-    const loaderTimeout = setTimeout(this.removeLoader, 3000);
-    window.addEventListener("load", () => {
-      clearTimeout(loaderTimeout);
-      this.removeLoader();
-    });
+  static async initForm() {
+    const contactForm = document.querySelector('.contato-form');
+    if (!contactForm) return;
+    
+    try {
+      // Espera o FormSubmit estar disponível
+      await this.waitForFormSubmit();
+      
+      new FormSubmit(contactForm);
+      console.log('✅ Formulário inicializado');
+    } catch (error) {
+      console.error('Erro no formulário:', error);
+    }
+  }
+
+  static async waitForFormSubmit() {
+    const maxAttempts = 10;
+    let attempts = 0;
+    
+    while (typeof FormSubmit === 'undefined' && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      attempts++;
+    }
+
+    if (typeof FormSubmit === 'undefined') {
+      throw new Error('FormSubmit não carregado');
+    }
   }
 
   static removeLoader() {
-    const loader = document.querySelector(".page-loader");
+    const loader = document.querySelector('.page-loader');
     if (loader) {
-      loader.style.opacity = "0";
+      loader.style.opacity = '0';
       setTimeout(() => loader.remove(), 500);
     }
   }
 
-  static initComponents() {
-    new ScrollCarousel();
-    new SkillPopup();
-
-    const contactForm = document.querySelector(".contato-form");
-    if (contactForm) new FormSubmit(contactForm);
-  }
-
-  static loadPolyfillIfNeeded() {
-    if (
-      typeof CSS !== "undefined" &&
-      CSS.supports &&
-      !CSS.supports("scroll-snap-align", "start")
-    ) {
-      const script = document.createElement("script");
-      script.src =
-        "https://unpkg.com/scrollsnap-polyfill@latest/dist/scrollsnap-polyfill.min.js";
-      script.onload = () => {
-        const container = document.querySelector(".scroll-snap-container");
-        if (container) scrollsnapPolyfill();
-      };
+  static loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = () => reject(new Error(`Falha ao carregar ${src}`));
       document.head.appendChild(script);
-    }
+    });
   }
 }
 
-// Inicialização da aplicação
-document.addEventListener("DOMContentLoaded", () => AppInitializer.init());
+// Inicialização segura
+document.addEventListener('DOMContentLoaded', () => {
+  AppInitializer.init();
+});
+
+
+
+
+
+
+
+
+
 document.getElementById("downloadCv")?.addEventListener("click", function (e) {
   e.preventDefault();
 
