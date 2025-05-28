@@ -511,7 +511,7 @@ document.getElementById("downloadCv")?.addEventListener("click", function (e) {
   e.preventDefault();
 
   // URL do seu currículo (substitua pelo caminho real)
-  const cvUrl = "assets/docs/Currículo.pdf";
+  const cvUrl = "assets/docs/Matheus_Javier_DEV_Currículo.pdf";
 
   // Nome do arquivo para download
   const fileName = "Matheus-Javier-Curriculo.pdf";
