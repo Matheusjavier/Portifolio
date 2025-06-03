@@ -306,6 +306,35 @@ class SkillPopup {
         level: "Intermediário",
         percentage: 70,
       },
+
+      java: {
+        title: "Java",
+        description:
+          "Estudando os fundamentos robustos da linguagem e Programação Orientada a Objetos para o desenvolvimento de aplicações escaláveis e sistemas corporativos.",
+        level: "Básico",
+        percentage: 30,
+      },
+      python: {
+        title: "Python",
+        description:
+          "Explorando o potencial de Python para análise e manipulação de dados, automação de processos e desenvolvimento de scripts eficientes.",
+        level: "Básico",
+        percentage: 30,
+      },
+      node: {
+        title: "Node.js",
+        description:
+          "Aprendendo a arquitetar e desenvolver soluções de back-end performáticas e APIs RESTful utilizando JavaScript no ambiente Node.js.",
+        level: "Básico",
+        percentage: 30,
+      },
+      react: {
+        title: "React",
+        description:
+          "Desenvolvendo interfaces de usuário modernas e dinâmicas, com foco na construção de componentes reutilizáveis e na experiência do usuário (UX).",
+        level: "Básico",
+        percentage: 30,
+      },
       git: {
         title: "Git",
         description: "Controle de versão e trabalho em equipe com Git Flow",
@@ -318,6 +347,15 @@ class SkillPopup {
         level: "Intermediário",
         percentage: 70,
       },
+
+      office: {
+        title: "Pacote Office (Excel, Access, PowerBI)",
+        description:
+          "Conhecimento intermediário com Pacote Office, com foco em automação de tarefas e otimização de planilhas através de macros e VBA. Habilidade em criar documentos, apresentações e realizar análises de dados.",
+        level: "Intermediário",
+        percentage: 65,
+      },
+
       bootstrap: {
         title: "Bootstrap",
         description: "Desenvolvimento responsivo com o framework Bootstrap",
@@ -408,20 +446,20 @@ class SkillPopup {
 class AppInitializer {
   static async init() {
     try {
-      console.log('🚀 Iniciando aplicação...');
-      
+      console.log("🚀 Iniciando aplicação...");
+
       // 1. Carrega o EmailJS primeiro
       await this.loadEmailJS();
-      
+
       // 2. Inicializa componentes básicos
       this.initBasicComponents();
-      
+
       // 3. Inicializa o formulário
       await this.initForm();
-      
-      console.log('🎉 Aplicação pronta');
+
+      console.log("🎉 Aplicação pronta");
     } catch (error) {
-      console.error('❌ Erro na inicialização:', error);
+      console.error("❌ Erro na inicialização:", error);
     } finally {
       // Garante que o loader seja removido
       this.removeLoader();
@@ -429,60 +467,62 @@ class AppInitializer {
   }
 
   static async loadEmailJS() {
-    if (typeof emailjs !== 'undefined') return;
-    
-    console.log('📦 Carregando EmailJS...');
-    await this.loadScript('https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js');
+    if (typeof emailjs !== "undefined") return;
+
+    console.log("📦 Carregando EmailJS...");
+    await this.loadScript(
+      "https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    );
   }
 
   static initBasicComponents() {
     // Atualiza o ano de copyright
-    const yearElement = document.querySelector('[data-current-year]');
+    const yearElement = document.querySelector("[data-current-year]");
     if (yearElement) {
       yearElement.textContent = new Date().getFullYear();
     }
   }
 
   static async initForm() {
-    const contactForm = document.querySelector('.contato-form');
+    const contactForm = document.querySelector(".contato-form");
     if (!contactForm) return;
-    
+
     try {
       // Espera o FormSubmit estar disponível
       await this.waitForFormSubmit();
-      
+
       new FormSubmit(contactForm);
-      console.log('✅ Formulário inicializado');
+      console.log("✅ Formulário inicializado");
     } catch (error) {
-      console.error('Erro no formulário:', error);
+      console.error("Erro no formulário:", error);
     }
   }
 
   static async waitForFormSubmit() {
     const maxAttempts = 10;
     let attempts = 0;
-    
-    while (typeof FormSubmit === 'undefined' && attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+
+    while (typeof FormSubmit === "undefined" && attempts < maxAttempts) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
       attempts++;
     }
 
-    if (typeof FormSubmit === 'undefined') {
-      throw new Error('FormSubmit não carregado');
+    if (typeof FormSubmit === "undefined") {
+      throw new Error("FormSubmit não carregado");
     }
   }
 
   static removeLoader() {
-    const loader = document.querySelector('.page-loader');
+    const loader = document.querySelector(".page-loader");
     if (loader) {
-      loader.style.opacity = '0';
+      loader.style.opacity = "0";
       setTimeout(() => loader.remove(), 500);
     }
   }
 
   static loadScript(src) {
     return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
+      const script = document.createElement("script");
       script.src = src;
       script.onload = resolve;
       script.onerror = () => reject(new Error(`Falha ao carregar ${src}`));
@@ -493,17 +533,20 @@ class AppInitializer {
 
 // Inicialização segura
 // Inicializa os componentes quando o DOM estiver pronto
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Inicializa o App
   AppInitializer.init();
-  
+
   // Inicializa o ScrollCarousel (se os elementos existirem)
-  if (document.querySelector('.scroll-snap-section') && document.querySelector('.scroll-nav-dots')) {
+  if (
+    document.querySelector(".scroll-snap-section") &&
+    document.querySelector(".scroll-nav-dots")
+  ) {
     new ScrollCarousel();
   }
-  
+
   // Inicializa o SkillPopup (se o elemento existir)
-  if (document.getElementById('skillPopup')) {
+  if (document.getElementById("skillPopup")) {
     new SkillPopup();
   }
 });
