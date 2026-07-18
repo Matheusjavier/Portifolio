@@ -57,7 +57,7 @@
 }
 
 /* =========================================================
-   RESET
+   RESET E BLOQUEIO DE ROLAGEM LATERAL
 ========================================================= */
 
 *,
@@ -69,11 +69,19 @@
 }
 
 html {
+  width: 100%;
+  max-width: 100%;
+
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 24px);
+
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 body {
+  width: 100%;
+  max-width: 100%;
   min-width: 320px;
   min-height: 100vh;
 
@@ -103,11 +111,36 @@ body {
   line-height: 1.65;
 
   overflow-x: hidden;
-  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
 }
 
 body.menu-open {
   overflow: hidden;
+}
+
+main,
+.site-header,
+.site-footer {
+  width: 100%;
+  max-width: 100%;
+}
+
+main {
+  position: relative;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  main {
+    overflow-x: clip;
+  }
 }
 
 a {
@@ -144,6 +177,9 @@ ul {
   inset: 0;
   z-index: -5;
 
+  width: 100%;
+  max-width: 100%;
+
   pointer-events: none;
 
   background-image:
@@ -176,14 +212,13 @@ ul {
   position: fixed;
   z-index: -4;
 
-  width: 520px;
-  height: 520px;
+  width: min(520px, 80vw);
+  height: min(520px, 80vw);
 
   border-radius: 50%;
   filter: blur(120px);
 
   opacity: 0.16;
-
   pointer-events: none;
 }
 
@@ -196,7 +231,7 @@ ul {
 
 .background-glow-two {
   top: 420px;
-  right: -220px;
+  right: -180px;
 
   background: var(--secondary);
 }
@@ -207,11 +242,16 @@ ul {
 
 .container {
   width: min(calc(100% - 40px), var(--container));
+  max-width: 100%;
+
   margin-inline: auto;
 }
 
 .section {
   position: relative;
+
+  width: 100%;
+  max-width: 100%;
 
   padding: 118px 0;
 }
@@ -264,6 +304,7 @@ ul {
   height: var(--header-height);
 
   background: rgba(5, 10, 18, 0.8);
+
   border-bottom: 1px solid var(--border);
 
   backdrop-filter: blur(20px);
@@ -318,6 +359,8 @@ ul {
   align-items: center;
   gap: 12px;
 
+  min-width: 0;
+
   color: var(--text);
 
   text-decoration: none;
@@ -328,6 +371,8 @@ ul {
 .brand-symbol {
   width: 40px;
   height: 40px;
+
+  flex: 0 0 40px;
 
   display: inline-grid;
   place-items: center;
@@ -365,7 +410,12 @@ ul {
 }
 
 .brand-text {
+  overflow: hidden;
+
   font-size: 0.96rem;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .main-nav {
@@ -429,7 +479,6 @@ ul {
   padding-inline: 16px;
 
   color: #ffffff;
-
   background: rgba(139, 92, 246, 0.15);
 
   border: 1px solid rgba(167, 139, 250, 0.28);
@@ -444,6 +493,7 @@ ul {
   transform: translateY(-1px);
 
   background: rgba(139, 92, 246, 0.24);
+
   border-color: rgba(167, 139, 250, 0.48);
 }
 
@@ -452,6 +502,8 @@ ul {
 
   width: 44px;
   height: 44px;
+
+  flex: 0 0 44px;
 
   color: var(--text);
   background: var(--surface);
@@ -511,8 +563,13 @@ ul {
   align-items: center;
 }
 
+.hero-content {
+  min-width: 0;
+}
+
 .availability-badge {
   width: fit-content;
+  max-width: 100%;
 
   display: inline-flex;
   align-items: center;
@@ -522,7 +579,6 @@ ul {
   padding: 8px 13px;
 
   color: #cbd5e1;
-
   background: rgba(15, 29, 48, 0.72);
 
   border: 1px solid rgba(52, 211, 153, 0.18);
@@ -585,6 +641,8 @@ ul {
 .hero h1 {
   max-width: 760px;
 
+  overflow-wrap: break-word;
+
   font-size: clamp(3.2rem, 7vw, 6.1rem);
   line-height: 0.98;
   letter-spacing: -0.065em;
@@ -615,6 +673,7 @@ ul {
 
 .hero-description strong {
   color: var(--text);
+
   font-weight: 650;
 }
 
@@ -740,6 +799,9 @@ ul {
 
 .professional-panel {
   position: relative;
+
+  min-width: 0;
+  max-width: 100%;
 
   padding: 26px;
 
@@ -875,7 +937,11 @@ ul {
 }
 
 .data-row strong {
+  min-width: 0;
+
   color: var(--text-secondary);
+
+  overflow-wrap: anywhere;
 
   font-size: 0.82rem;
   text-align: right;
@@ -901,7 +967,6 @@ ul {
   padding: 6px 10px;
 
   color: #cbd5e1;
-
   background: rgba(255, 255, 255, 0.04);
 
   border: 1px solid var(--border);
@@ -1069,6 +1134,8 @@ ul {
 }
 
 .about-description {
+  min-width: 0;
+
   color: var(--text-secondary);
 }
 
@@ -1096,6 +1163,8 @@ ul {
 }
 
 .about-features {
+  min-width: 0;
+
   display: grid;
   gap: 14px;
 }
@@ -1105,6 +1174,7 @@ ul {
   align-items: flex-start;
   gap: 16px;
 
+  min-width: 0;
   padding: 20px;
 
   background: rgba(11, 22, 37, 0.72);
@@ -1204,6 +1274,8 @@ ul {
 }
 
 .experience-card {
+  min-width: 0;
+
   display: grid;
 
   grid-template-columns:
@@ -1271,6 +1343,7 @@ ul {
   position: relative;
   z-index: 2;
 
+  min-width: 0;
   padding: 28px 30px;
 }
 
@@ -1365,6 +1438,8 @@ ul {
 ========================================================= */
 
 .featured-project {
+  min-width: 0;
+
   display: grid;
 
   grid-template-columns:
@@ -1394,9 +1469,13 @@ ul {
 .featured-project-content {
   position: relative;
   z-index: 2;
+
+  min-width: 0;
 }
 
 .project-window {
+  max-width: 100%;
+
   overflow: hidden;
 
   background: #07101c;
@@ -1411,6 +1490,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 
   padding: 13px 16px;
 
@@ -1421,6 +1501,15 @@ ul {
 
   font-family: "JetBrains Mono", monospace;
   font-size: 0.65rem;
+}
+
+.project-window-header > span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .project-window-dots {
@@ -1499,7 +1588,7 @@ ul {
   width: min(100%, 300px);
 
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -1528,6 +1617,8 @@ ul {
 .project-heading h3 {
   margin-top: 10px;
 
+  overflow-wrap: anywhere;
+
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.1;
   letter-spacing: -0.04em;
@@ -1544,7 +1635,7 @@ ul {
 
 .project-features {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px 20px;
 
   margin-top: 22px;
@@ -1645,6 +1736,8 @@ ul {
 }
 
 .project-type {
+  min-width: 0;
+
   color: var(--text-muted);
 
   font-family: "JetBrains Mono", monospace;
@@ -1654,6 +1747,8 @@ ul {
 
 .project-card h3 {
   margin-top: 24px;
+
+  overflow-wrap: anywhere;
 
   font-size: 1.25rem;
 }
@@ -1682,13 +1777,14 @@ ul {
 
 .technology-layout {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
 
 .technology-group {
   position: relative;
 
+  min-width: 0;
   padding: 27px;
 
   background: rgba(11, 22, 37, 0.72);
@@ -1763,6 +1859,8 @@ ul {
 }
 
 .education-item {
+  min-width: 0;
+
   display: grid;
 
   grid-template-columns:
@@ -1807,6 +1905,10 @@ ul {
   font-weight: 600;
 }
 
+.education-content {
+  min-width: 0;
+}
+
 .education-content span {
   color: var(--text-muted);
 
@@ -1817,6 +1919,8 @@ ul {
 
 .education-content h3 {
   margin-top: 4px;
+
+  overflow-wrap: anywhere;
 
   font-size: 1.05rem;
 }
@@ -1863,6 +1967,8 @@ ul {
 }
 
 .contact-card {
+  min-width: 0;
+
   display: grid;
 
   grid-template-columns:
@@ -1891,6 +1997,8 @@ ul {
 .contact-card > * {
   position: relative;
   z-index: 2;
+
+  min-width: 0;
 }
 
 .contact-number {
@@ -1915,6 +2023,8 @@ ul {
 
   margin-top: 10px;
 
+  overflow-wrap: anywhere;
+
   font-size: clamp(2.1rem, 4vw, 3.5rem);
   line-height: 1.12;
   letter-spacing: -0.045em;
@@ -1932,6 +2042,8 @@ ul {
 }
 
 .contact-options {
+  min-width: 0;
+
   display: grid;
   gap: 12px;
 }
@@ -1996,6 +2108,7 @@ ul {
 .contact-option strong {
   display: block;
 
+  min-width: 0;
   margin-top: 2px;
 
   overflow: hidden;
@@ -2028,7 +2141,7 @@ ul {
   display: grid;
 
   grid-template-columns:
-    1fr
+    minmax(0, 1fr)
     auto
     42px;
 
@@ -2142,7 +2255,7 @@ ul {
 
 @media (max-width: 1050px) {
   .hero-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 56px;
   }
 
@@ -2151,11 +2264,12 @@ ul {
   }
 
   .professional-panel {
+    width: 100%;
     max-width: 700px;
   }
 
   .about-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 48px;
   }
 
@@ -2164,10 +2278,11 @@ ul {
   }
 
   .featured-project {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .project-visual {
+    width: 100%;
     max-width: 650px;
   }
 
@@ -2180,11 +2295,12 @@ ul {
   }
 
   .contact-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 44px;
   }
 
   .contact-options {
+    width: 100%;
     max-width: 620px;
   }
 }
@@ -2202,15 +2318,20 @@ ul {
     place-items: center;
   }
 
+  /*
+    O menu permanece dentro da tela enquanto está fechado.
+    Não existe translateX(100%), evitando largura lateral extra.
+  */
+
   .main-nav {
-    position: absolute;
-    top: 100%;
-    right: -20px;
+    position: fixed;
+    top: var(--header-height);
+    right: 0;
+    bottom: 0;
     z-index: 1003;
 
-    width: min(84vw, 340px);
-    height: calc(100vh - var(--header-height));
-    height: calc(100dvh - var(--header-height));
+    width: min(88vw, 340px);
+    max-width: calc(100vw - 32px);
 
     display: flex;
     flex-direction: column;
@@ -2222,23 +2343,25 @@ ul {
     background: rgba(5, 10, 18, 0.995);
 
     border-left: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
 
     box-shadow: -20px 30px 60px rgba(0, 0, 0, 0.36);
 
+    overflow-x: hidden;
     overflow-y: auto;
+
     overscroll-behavior: contain;
 
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
-    transform: translateX(105%);
+    transform: scale(0.985);
+    transform-origin: top right;
 
     transition:
-      transform 240ms ease,
       opacity 180ms ease,
-      visibility 0s linear 240ms;
+      transform 220ms ease,
+      visibility 0s linear 220ms;
   }
 
   .main-nav.open {
@@ -2246,11 +2369,11 @@ ul {
     visibility: visible;
     pointer-events: auto;
 
-    transform: translateX(0);
+    transform: scale(1);
 
     transition:
-      transform 240ms ease,
-      opacity 180ms ease;
+      opacity 180ms ease,
+      transform 220ms ease;
   }
 
   .main-nav a {
@@ -2285,7 +2408,7 @@ ul {
   }
 
   .experience-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .experience-sidebar {
@@ -2300,11 +2423,11 @@ ul {
   }
 
   .technology-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .secondary-projects {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .secondary-projects .project-card:last-child {
@@ -2336,24 +2459,20 @@ ul {
   .brand-symbol {
     width: 38px;
     height: 38px;
+
+    flex-basis: 38px;
   }
 
   .brand-text {
     font-size: 0.88rem;
   }
 
-  .main-nav {
-    right: -14px;
-
-    width: min(88vw, 340px);
-  }
-
   .hero {
-  min-height: auto;
+    min-height: auto;
 
-  padding-top: 46px;
-  padding-bottom: 72px;
-}
+    padding-top: 46px;
+    padding-bottom: 72px;
+  }
 
   .hero h1 {
     font-size: clamp(3rem, 15vw, 4.6rem);
@@ -2377,14 +2496,18 @@ ul {
   }
 
   .hero-social {
-  gap: 14px 20px;
-  margin-top: 24px;
-}
+    gap: 14px 20px;
 
- .professional-panel {
-  width: 100%;
-  padding: 20px;
-}
+    margin-top: 24px;
+  }
+
+  .professional-panel {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 20px;
+  }
+
   .panel-header {
     flex-direction: column;
   }
@@ -2420,7 +2543,7 @@ ul {
   }
 
   .about-features {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .experience-main {
@@ -2440,11 +2563,11 @@ ul {
   }
 
   .project-features {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .architecture-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .project-card,
@@ -2453,7 +2576,7 @@ ul {
   }
 
   .education-item {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 10px;
 
     padding: 20px;
@@ -2474,7 +2597,7 @@ ul {
   }
 
   .footer-content {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .footer-copyright {
@@ -2495,16 +2618,17 @@ ul {
 ========================================================= */
 
 @media (max-width: 420px) {
-  .hero h1 {
-    font-size: 2.65rem;
-  }
-
   .hero-layout {
     gap: 38px;
   }
 
+  .hero h1 {
+    font-size: 2.65rem;
+  }
+
   .hero-description {
     margin-top: 24px;
+
     font-size: 0.94rem;
     line-height: 1.7;
   }
@@ -2521,6 +2645,7 @@ ul {
 
   .panel-header {
     gap: 12px;
+
     padding-bottom: 16px;
   }
 
