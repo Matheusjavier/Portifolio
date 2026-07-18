@@ -2349,11 +2349,11 @@ ul {
   }
 
   .hero {
-    min-height: auto;
+  min-height: auto;
 
-    padding-top: 58px;
-    padding-bottom: 90px;
-  }
+  padding-top: 46px;
+  padding-bottom: 72px;
+}
 
   .hero h1 {
     font-size: clamp(3rem, 15vw, 4.6rem);
@@ -2377,13 +2377,14 @@ ul {
   }
 
   .hero-social {
-    gap: 16px;
-  }
+  gap: 14px 20px;
+  margin-top: 24px;
+}
 
-  .professional-panel {
-    padding: 20px;
-  }
-
+ .professional-panel {
+  width: 100%;
+  padding: 20px;
+}
   .panel-header {
     flex-direction: column;
   }
@@ -2495,29 +2496,76 @@ ul {
 
 @media (max-width: 420px) {
   .hero h1 {
-    font-size: 2.75rem;
+    font-size: 2.65rem;
+  }
+
+  .hero-layout {
+    gap: 38px;
+  }
+
+  .hero-description {
+    margin-top: 24px;
+    font-size: 0.94rem;
+    line-height: 1.7;
   }
 
   .hero-social {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px 20px;
+  }
+
+  .professional-panel {
+    padding: 18px;
+  }
+
+  .panel-header {
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+
+  .panel-header h2 {
+    font-size: 1.08rem;
+  }
+
+  .professional-data {
+    margin-top: 6px;
   }
 
   .data-row {
-    flex-direction: column;
-    gap: 3px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+
+    padding: 11px 0;
+  }
+
+  .data-row span {
+    font-size: 0.72rem;
   }
 
   .data-row strong {
-    max-width: none;
+    max-width: 58%;
 
-    text-align: left;
+    font-size: 0.73rem;
+    line-height: 1.4;
+    text-align: right;
   }
 
   .panel-stack span,
   .project-technologies span,
   .experience-technologies span,
   .technology-list span {
-    font-size: 0.64rem;
+    font-size: 0.62rem;
+  }
+
+  .panel-footer {
+    margin-top: 18px;
+    padding: 12px;
+  }
+
+  .panel-footer strong {
+    font-size: 0.73rem;
   }
 
   .project-card-header {
