@@ -1,8 +1,6 @@
-"use strict";
-
-/* =========================================================
+/* 
    ELEMENTOS DA PÁGINA
-========================================================= */
+ */
 
 const body = document.body;
 const header = document.querySelector(".site-header");
@@ -16,17 +14,17 @@ const yearElement = document.getElementById("current-year");
 
 const mobileBreakpoint = 900;
 
-/* =========================================================
+/* 
    ANO AUTOMÁTICO NO RODAPÉ
-========================================================= */
+ */
 
 if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
 
-/* =========================================================
+/* 
    MENU MOBILE
-========================================================= */
+*/
 
 function updateMenuButton(isOpen) {
   if (!menuButton) return;
@@ -109,9 +107,9 @@ window.addEventListener("resize", () => {
   }
 });
 
-/* =========================================================
+/* 
    ANIMAÇÃO DE ENTRADA
-========================================================= */
+ */
 
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
@@ -155,9 +153,9 @@ if (
   });
 }
 
-/* =========================================================
+/* 
    SEÇÃO ATIVA NO MENU
-========================================================= */
+*/
 
 function setActiveNavigation(sectionId) {
   navigationLinks.forEach((link) => {
@@ -199,9 +197,9 @@ if ("IntersectionObserver" in window) {
   });
 }
 
-/* =========================================================
+/* 
    EFEITO DE ILUMINAÇÃO NOS CARDS
-========================================================= */
+*/
 
 const supportsFinePointer = window.matchMedia(
   "(hover: hover) and (pointer: fine)"
@@ -232,9 +230,9 @@ if (supportsFinePointer && !prefersReducedMotion) {
   });
 }
 
-/* =========================================================
+/* 
    EFEITO VISUAL NO HEADER AO ROLAR
-========================================================= */
+*/
 
 function updateHeaderOnScroll() {
   if (!header) return;
@@ -250,9 +248,9 @@ window.addEventListener("scroll", updateHeaderOnScroll, {
 
 updateHeaderOnScroll();
 
-/* =========================================================
-   ROLAGEM SUAVE COM COMPATIBILIDADE
-========================================================= */
+/* 
+   ROLAGEM SUAVE 
+*/
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (event) => {
