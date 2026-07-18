@@ -1,569 +1,281 @@
-/**
- * =============================================
- * FUNÇÕES GERAIS E UTILITÁRIOS
- * =============================================
- */
+"use strict";
 
-// Remove o loader da página
-function removeLoader() {
-  const pageLoader = document.querySelector(".page-loader");
-  if (pageLoader) {
-    pageLoader.style.opacity = "0";
-    setTimeout(() => {
-      pageLoader.style.display = "none";
-    }, 500);
+/* =========================================================
+   ELEMENTOS DA PÁGINA
+========================================================= */
+
+const body = document.body;
+const header = document.querySelector(".site-header");
+const menuButton = document.querySelector(".menu-toggle");
+const navigation = document.querySelector(".main-nav");
+const navigationLinks = document.querySelectorAll(".main-nav a");
+const sections = document.querySelectorAll("main section[id]");
+const revealElements = document.querySelectorAll(".reveal");
+const spotlightCards = document.querySelectorAll(".spotlight-card");
+const yearElement = document.getElementById("current-year");
+
+const mobileBreakpoint = 900;
+
+/* =========================================================
+   ANO AUTOMÁTICO NO RODAPÉ
+========================================================= */
+
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
+
+/* =========================================================
+   MENU MOBILE
+========================================================= */
+
+function updateMenuButton(isOpen) {
+  if (!menuButton) return;
+
+  menuButton.setAttribute("aria-expanded", String(isOpen));
+  menuButton.setAttribute(
+    "aria-label",
+    isOpen ? "Fechar menu" : "Abrir menu"
+  );
+
+  menuButton.innerHTML = isOpen
+    ? '<i class="fa-solid fa-xmark"></i>'
+    : '<i class="fa-solid fa-bars"></i>';
+}
+
+function openMenu() {
+  if (!navigation) return;
+
+  navigation.classList.add("open");
+  body.classList.add("menu-open");
+  updateMenuButton(true);
+}
+
+function closeMenu() {
+  if (!navigation) return;
+
+  navigation.classList.remove("open");
+  body.classList.remove("menu-open");
+  updateMenuButton(false);
+}
+
+function toggleMenu() {
+  if (!navigation) return;
+
+  const isOpen = navigation.classList.contains("open");
+
+  if (isOpen) {
+    closeMenu();
+  } else {
+    openMenu();
   }
 }
 
-// Atualiza o ano no footer
-function updateYear() {
-  const yearElement = document.getElementById("year");
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
+menuButton?.addEventListener("click", toggleMenu);
+
+navigationLinks.forEach((link) => {
+  link.addEventListener("click", closeMenu);
+});
+
+/*
+  Fecha o menu quando o usuário clica fora dele.
+*/
+document.addEventListener("click", (event) => {
+  if (!navigation || !menuButton) return;
+  if (!navigation.classList.contains("open")) return;
+
+  const clickedNavigation = navigation.contains(event.target);
+  const clickedButton = menuButton.contains(event.target);
+
+  if (!clickedNavigation && !clickedButton) {
+    closeMenu();
   }
+});
+
+/*
+  Fecha o menu ao pressionar Escape.
+*/
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeMenu();
+  }
+});
+
+/*
+  Evita que o menu continue aberto quando a tela aumenta.
+*/
+window.addEventListener("resize", () => {
+  if (window.innerWidth > mobileBreakpoint) {
+    closeMenu();
+  }
+});
+
+/* =========================================================
+   ANIMAÇÃO DE ENTRADA
+========================================================= */
+
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+function showAllElements() {
+  revealElements.forEach((element) => {
+    element.classList.add("visible");
+  });
 }
 
-// Função para throttle (limitar chamadas de eventos)
-function throttle(func, limit) {
-  let lastFunc;
-  let lastRan;
+if (
+  prefersReducedMotion ||
+  !("IntersectionObserver" in window)
+) {
+  showAllElements();
+} else {
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
 
-  return function () {
-    const context = this;
-    const args = arguments;
-
-    if (!lastRan) {
-      func.apply(context, args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(function () {
-        if (Date.now() - lastRan >= limit) {
-          func.apply(context, args);
-          lastRan = Date.now();
-        }
-      }, limit - (Date.now() - lastRan));
-    }
-  };
-}
-
-/**
- * =============================================
- * SCROLL CAROUSEL - Navegação por seções
- * =============================================
- */
-class ScrollCarousel {
-  constructor() {
-    this.sections = document.querySelectorAll(".scroll-snap-section");
-    this.dotsContainer = document.querySelector(".scroll-nav-dots");
-    this.isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints;
-    this.scrollLock = false;
-    this.currentIndex = 0;
-    this.scrollDelay = 1000;
-    this.lastScrollTime = 0;
-    this.scrollTimeout = null;
-
-    if (this.validateElements()) {
-      this.init();
-    }
-  }
-
-  init() {
-    this.createNavigationDots();
-    this.setupScrollBehavior();
-    this.setupObservers();
-    this.addEventListeners();
-  }
-
-  validateElements() {
-    return this.sections.length > 0 && this.dotsContainer;
-  }
-
-  createNavigationDots() {
-    this.sections.forEach((section, index) => {
-      const dot = document.createElement("button");
-      dot.className = "scroll-nav-dot";
-      dot.dataset.index = index;
-      dot.setAttribute("aria-label", `Ir para a seção ${index + 1}`);
-      dot.setAttribute("role", "button");
-      dot.setAttribute("tabindex", "0");
-
-      dot.addEventListener("click", () => this.scrollToSection(index));
-      dot.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          this.scrollToSection(index);
-        }
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
       });
-
-      this.dotsContainer.appendChild(dot);
-    });
-  }
-
-  setupScrollBehavior() {
-    const container = document.querySelector(".scroll-snap-container");
-    if (container) {
-      container.style.scrollSnapType = this.isTouchDevice
-        ? "y mandatory"
-        : "smooth";
+    },
+    {
+      threshold: 0.12,
+      rootMargin: "0px 0px -50px 0px",
     }
-  }
+  );
 
-  setupObservers() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const target = entry.target;
-          const index = [...this.sections].indexOf(target);
+  revealElements.forEach((element, index) => {
+    /*
+      Pequeno atraso progressivo para evitar que todos os
+      elementos apareçam exatamente ao mesmo tempo.
+    */
+    element.style.transitionDelay = `${Math.min(index * 35, 180)}ms`;
 
-          if (entry.isIntersecting) {
-            this.handleSectionAppear(target, index);
-          } else {
-            this.handleSectionDisappear(target);
-          }
-        });
-      },
-      { threshold: [0.1, 0.5, 0.9] }
-    );
+    revealObserver.observe(element);
+  });
+}
 
-    this.sections.forEach((section) => observer.observe(section));
-  }
+/* =========================================================
+   SEÇÃO ATIVA NO MENU
+========================================================= */
 
-  handleSectionAppear(section, index) {
-    section.classList.add("fading-in", "aparecer", "active");
-    section.classList.remove("fading-out");
-    this.currentIndex = index;
-    section.setAttribute("aria-hidden", "false");
-    this.updateDots();
-  }
+function setActiveNavigation(sectionId) {
+  navigationLinks.forEach((link) => {
+    const target = link.getAttribute("href");
+    const isActive = target === `#${sectionId}`;
 
-  handleSectionDisappear(section) {
-    section.classList.add("fading-out");
-    section.classList.remove("fading-in", "active");
-    section.setAttribute("aria-hidden", "true");
-  }
+    link.classList.toggle("active", isActive);
 
-  addEventListeners() {
-    document.addEventListener("keydown", (e) => this.handleKeyDown(e));
-    window.addEventListener("wheel", (e) => this.handleWheel(e), {
-      passive: false,
-    });
-    window.addEventListener(
-      "scroll",
-      throttle(() => this.updateActiveStates(), 100)
-    );
-  }
-
-  handleKeyDown(e) {
-    if (this.scrollLock) return;
-
-    const now = Date.now();
-    if (now - this.lastScrollTime < this.scrollDelay) return;
-
-    switch (e.key) {
-      case "ArrowDown":
-      case "PageDown":
-        e.preventDefault();
-        this.scrollToNext();
-        this.lastScrollTime = now;
-        break;
-      case "ArrowUp":
-      case "PageUp":
-        e.preventDefault();
-        this.scrollToPrev();
-        this.lastScrollTime = now;
-        break;
-      case "Home":
-        e.preventDefault();
-        this.scrollToSection(0);
-        break;
-      case "End":
-        e.preventDefault();
-        this.scrollToSection(this.sections.length - 1);
-        break;
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
     }
-  }
+  });
+}
 
-  handleWheel(e) {
-    if (this.scrollLock || Math.abs(e.deltaY) < 5) return;
-    e.preventDefault();
-    e.deltaY > 0 ? this.scrollToNext() : this.scrollToPrev();
-  }
+if ("IntersectionObserver" in window) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      const visibleSections = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort(
+          (first, second) =>
+            second.intersectionRatio - first.intersectionRatio
+        );
 
-  scrollToSection(index) {
-    if (this.scrollLock || index < 0 || index >= this.sections.length) return;
+      if (visibleSections.length === 0) return;
 
-    this.scrollLock = true;
-    this.currentIndex = index;
+      setActiveNavigation(visibleSections[0].target.id);
+    },
+    {
+      threshold: [0.2, 0.35, 0.5, 0.65],
+      rootMargin: "-20% 0px -50% 0px",
+    }
+  );
 
-    this.sections[index].scrollIntoView({
-      behavior: "smooth",
+  sections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+}
+
+/* =========================================================
+   EFEITO DE ILUMINAÇÃO NOS CARDS
+========================================================= */
+
+const supportsFinePointer = window.matchMedia(
+  "(hover: hover) and (pointer: fine)"
+).matches;
+
+function updateSpotlightPosition(event) {
+  const card = event.currentTarget;
+  const cardBounds = card.getBoundingClientRect();
+
+  const mouseX = event.clientX - cardBounds.left;
+  const mouseY = event.clientY - cardBounds.top;
+
+  card.style.setProperty("--mouse-x", `${mouseX}px`);
+  card.style.setProperty("--mouse-y", `${mouseY}px`);
+}
+
+function resetSpotlightPosition(event) {
+  const card = event.currentTarget;
+
+  card.style.setProperty("--mouse-x", "50%");
+  card.style.setProperty("--mouse-y", "50%");
+}
+
+if (supportsFinePointer && !prefersReducedMotion) {
+  spotlightCards.forEach((card) => {
+    card.addEventListener("pointermove", updateSpotlightPosition);
+    card.addEventListener("pointerleave", resetSpotlightPosition);
+  });
+}
+
+/* =========================================================
+   EFEITO VISUAL NO HEADER AO ROLAR
+========================================================= */
+
+function updateHeaderOnScroll() {
+  if (!header) return;
+
+  const hasScrolled = window.scrollY > 20;
+
+  header.classList.toggle("scrolled", hasScrolled);
+}
+
+window.addEventListener("scroll", updateHeaderOnScroll, {
+  passive: true,
+});
+
+updateHeaderOnScroll();
+
+/* =========================================================
+   ROLAGEM SUAVE COM COMPATIBILIDADE
+========================================================= */
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const targetId = link.getAttribute("href");
+
+    if (!targetId || targetId === "#") return;
+
+    const targetElement = document.querySelector(targetId);
+
+    if (!targetElement) return;
+
+    event.preventDefault();
+
+    targetElement.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
       block: "start",
     });
 
-    clearTimeout(this.scrollTimeout);
-    this.scrollTimeout = setTimeout(() => {
-      this.scrollLock = false;
-    }, this.scrollDelay);
-  }
-
-  scrollToNext() {
-    this.scrollToSection(
-      Math.min(this.currentIndex + 1, this.sections.length - 1)
-    );
-  }
-
-  scrollToPrev() {
-    this.scrollToSection(Math.max(this.currentIndex - 1, 0));
-  }
-
-  updateActiveStates() {
-    if (this.scrollLock) return;
-
-    const scrollPosition = window.scrollY + window.innerHeight / 2;
-    let newIndex = 0;
-    let minDistance = Infinity;
-
-    this.sections.forEach((section, index) => {
-      const sectionCenter = section.offsetTop + section.offsetHeight / 2;
-      const distance = Math.abs(scrollPosition - sectionCenter);
-
-      if (distance < minDistance) {
-        minDistance = distance;
-        newIndex = index;
-      }
-    });
-
-    if (newIndex !== this.currentIndex) {
-      this.currentIndex = newIndex;
-      this.updateDots();
+    /*
+      Atualiza a URL sem recarregar a página.
+    */
+    if (history.pushState) {
+      history.pushState(null, "", targetId);
     }
-  }
-
-  updateDots() {
-    if (!this.dotsContainer) return;
-
-    Array.from(this.dotsContainer.children).forEach((dot, index) => {
-      const isActive = index === this.currentIndex;
-      dot.classList.toggle("active", isActive);
-      dot.setAttribute("aria-current", isActive ? "true" : "false");
-    });
-  }
-}
-
-/**
- * =============================================
- * SKILL POPUP - Modal de habilidades
- * =============================================
- */
-class SkillPopup {
-  constructor() {
-    this.popup = document.getElementById("skillPopup");
-    this.closeBtn = document.getElementById("skillPopupClose");
-    this.titleElement = document.getElementById("skillPopupTitle");
-    this.descElement = document.getElementById("skillPopupDesc");
-    this.progressElement = document.getElementById("skillPopupProgress");
-    this.levelElement = document.getElementById("skillPopupLevel");
-
-    this.skillsData = {
-      csharp: {
-        title: "C#",
-        description:
-          "Experiência em desenvolvimento de aplicações desktop e APIs com .NET Core",
-        level: "Intermediário",
-        percentage: 65,
-      },
-      dotnet: {
-        title: ".NET",
-        description:
-          "Desenvolvimento de soluções empresariais com .NET Framework e .NET Core",
-        level: "Intermediário",
-        percentage: 60,
-      },
-      javascript: {
-        title: "JavaScript",
-        description:
-          "Desenvolvimento front-end com ES6+, manipulação de DOM e AJAX",
-        level: "Intermediário-Avançado",
-        percentage: 75,
-      },
-      html: {
-        title: "HTML5",
-        description: "Estruturação semântica de páginas web",
-        level: "Avançado",
-        percentage: 95,
-      },
-      css: {
-        title: "CSS3",
-        description: "Estilização criativa com CSS moderno e animações",
-        level: "Avançado",
-        percentage: 90,
-      },
-      "sql-server": {
-        title: "SQL Server",
-        description:
-          "Modelagem de bancos de dados e criação de queries complexas",
-        level: "Intermediário",
-        percentage: 70,
-      },
-
-      java: {
-        title: "Java",
-        description:
-          "Estudando os fundamentos robustos da linguagem e Programação Orientada a Objetos para o desenvolvimento de aplicações escaláveis e sistemas corporativos.",
-        level: "Básico",
-        percentage: 30,
-      },
-      python: {
-        title: "Python",
-        description:
-          "Explorando o potencial de Python para análise e manipulação de dados, automação de processos e desenvolvimento de scripts eficientes.",
-        level: "Básico",
-        percentage: 30,
-      },
-      node: {
-        title: "Node.js",
-        description:
-          "Aprendendo a arquitetar e desenvolver soluções de back-end performáticas e APIs RESTful utilizando JavaScript no ambiente Node.js.",
-        level: "Básico",
-        percentage: 30,
-      },
-      react: {
-        title: "React",
-        description:
-          "Desenvolvendo interfaces de usuário modernas e dinâmicas, com foco na construção de componentes reutilizáveis e na experiência do usuário (UX).",
-        level: "Básico",
-        percentage: 30,
-      },
-      git: {
-        title: "Git",
-        description: "Controle de versão e trabalho em equipe com Git Flow",
-        level: "Intermediário",
-        percentage: 75,
-      },
-      github: {
-        title: "GitHub",
-        description: "Hospedagem de repositórios e colaboração em projetos",
-        level: "Intermediário",
-        percentage: 70,
-      },
-
-      office: {
-        title: "Pacote Office (Excel, Access, PowerBI)",
-        description:
-          "Conhecimento intermediário com Pacote Office, com foco em automação de tarefas e otimização de planilhas através de macros e VBA. Habilidade em criar documentos, apresentações e realizar análises de dados.",
-        level: "Intermediário",
-        percentage: 65,
-      },
-
-      bootstrap: {
-        title: "Bootstrap",
-        description: "Desenvolvimento responsivo com o framework Bootstrap",
-        level: "Intermediário",
-        percentage: 65,
-      },
-    };
-
-    if (this.popup) this.init();
-  }
-
-  init() {
-    this.setupSkillClickHandlers();
-    this.setupPopupCloseHandlers();
-  }
-
-  setupSkillClickHandlers() {
-    const skillMapping = {
-      "c#": "csharp",
-      ".net": "dotnet",
-      "sql server": "sql-server",
-    };
-
-    document.querySelectorAll(".habilidade").forEach((skill) => {
-      skill.style.cursor = "pointer";
-      skill.setAttribute("role", "button");
-      skill.setAttribute("tabindex", "0");
-
-      skill.addEventListener("click", () => {
-        const skillName =
-          skill.querySelector("img")?.alt.toLowerCase() ||
-          skill.querySelector("p")?.textContent.toLowerCase().trim();
-        const skillId =
-          skillMapping[skillName] ||
-          skillName.replace(/[.#]/g, "").replace(/\s+/g, "-");
-        this.showPopup(skillId);
-      });
-
-      skill.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          skill.click();
-        }
-      });
-    });
-  }
-
-  setupPopupCloseHandlers() {
-    this.closeBtn.addEventListener("click", () => this.hidePopup());
-    this.popup.addEventListener("click", (e) => {
-      if (e.target === this.popup) this.hidePopup();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && this.popup.classList.contains("active")) {
-        this.hidePopup();
-      }
-    });
-  }
-
-  showPopup(skillId) {
-    const skillData = this.skillsData[skillId];
-    if (!skillData) return;
-
-    this.titleElement.textContent = skillData.title;
-    this.descElement.textContent = skillData.description;
-    this.levelElement.textContent = skillData.level;
-
-    this.progressElement.style.width = "0";
-    setTimeout(() => {
-      this.progressElement.style.width = `${skillData.percentage}%`;
-    }, 50);
-
-    this.popup.classList.add("active");
-    document.body.style.overflow = "hidden";
-    this.closeBtn.focus();
-  }
-
-  hidePopup() {
-    this.popup.classList.remove("active");
-    document.body.style.overflow = "";
-  }
-}
-/**
- * =============================================
- * INICIALIZAÇÃO DA APLICAÇÃO
- * =============================================
- */
-class AppInitializer {
-  static async init() {
-    try {
-      console.log("🚀 Iniciando aplicação...");
-
-      // 1. Carrega o EmailJS primeiro
-      await this.loadEmailJS();
-
-      // 2. Inicializa componentes básicos
-      this.initBasicComponents();
-
-      // 3. Inicializa o formulário
-      await this.initForm();
-
-      console.log("🎉 Aplicação pronta");
-    } catch (error) {
-      console.error("❌ Erro na inicialização:", error);
-    } finally {
-      // Garante que o loader seja removido
-      this.removeLoader();
-    }
-  }
-
-  static async loadEmailJS() {
-    if (typeof emailjs !== "undefined") return;
-
-    console.log("📦 Carregando EmailJS...");
-    await this.loadScript(
-      "https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
-    );
-  }
-
-  static initBasicComponents() {
-    // Atualiza o ano de copyright
-    const yearElement = document.querySelector("[data-current-year]");
-    if (yearElement) {
-      yearElement.textContent = new Date().getFullYear();
-    }
-  }
-
-  static async initForm() {
-    const contactForm = document.querySelector(".contato-form");
-    if (!contactForm) return;
-
-    try {
-      // Espera o FormSubmit estar disponível
-      await this.waitForFormSubmit();
-
-      new FormSubmit(contactForm);
-      console.log("✅ Formulário inicializado");
-    } catch (error) {
-      console.error("Erro no formulário:", error);
-    }
-  }
-
-  static async waitForFormSubmit() {
-    const maxAttempts = 10;
-    let attempts = 0;
-
-    while (typeof FormSubmit === "undefined" && attempts < maxAttempts) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      attempts++;
-    }
-
-    if (typeof FormSubmit === "undefined") {
-      throw new Error("FormSubmit não carregado");
-    }
-  }
-
-  static removeLoader() {
-    const loader = document.querySelector(".page-loader");
-    if (loader) {
-      loader.style.opacity = "0";
-      setTimeout(() => loader.remove(), 500);
-    }
-  }
-
-  static loadScript(src) {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = resolve;
-      script.onerror = () => reject(new Error(`Falha ao carregar ${src}`));
-      document.head.appendChild(script);
-    });
-  }
-}
-
-// Inicialização segura
-// Inicializa os componentes quando o DOM estiver pronto
-document.addEventListener("DOMContentLoaded", () => {
-  // Inicializa o App
-  AppInitializer.init();
-
-  // Inicializa o ScrollCarousel (se os elementos existirem)
-  if (
-    document.querySelector(".scroll-snap-section") &&
-    document.querySelector(".scroll-nav-dots")
-  ) {
-    new ScrollCarousel();
-  }
-
-  // Inicializa o SkillPopup (se o elemento existir)
-  if (document.getElementById("skillPopup")) {
-    new SkillPopup();
-  }
-});
-document.getElementById("downloadCv")?.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  // URL do seu currículo (substitua pelo caminho real)
-  const cvUrl = "assets/docs/Matheus_Javier_DEV_Currículo.pdf";
-
-  // Nome do arquivo para download
-  const fileName = "Matheus-Javier-Curriculo.pdf";
-
-  // Cria link temporário para download
-  const link = document.createElement("a");
-  link.href = cvUrl;
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  });
 });

@@ -1,296 +1,1264 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matheus Javier - Desenvolvedor Full Stack</title>
-    <meta name="description"
-        content="Portfólio de Matheus Javier - Desenvolvedor Full Stack com experiência em .NET, C# e JavaScript">
+  <meta charset="UTF-8" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
-    <link rel="stylesheet" href="css/style.css">
+  <title>Matheus Javier | Desenvolvedor .NET</title>
 
-    <link rel="icon" href="assets/favicon.ico">
+  <meta
+    name="description"
+    content="Portfólio de Matheus Javier, Desenvolvedor .NET com experiência em C#, VB.NET, SQL Server, APIs REST, integrações e sistemas corporativos."
+  />
+
+  <meta
+    name="theme-color"
+    content="#060b14"
+  />
+
+  <meta
+    property="og:title"
+    content="Matheus Javier | Desenvolvedor .NET"
+  />
+
+  <meta
+    property="og:description"
+    content="Desenvolvimento back-end, APIs, integrações, aplicações desktop e sistemas corporativos com .NET e SQL Server."
+  />
+
+  <meta
+    property="og:type"
+    content="website"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  />
 </head>
 
 <body>
-    <div class="page-loader">
-        <div class="loader-spinner"></div>
+  <a
+    class="skip-link"
+    href="#conteudo"
+  >
+    Ir para o conteúdo
+  </a>
+
+  <div
+    class="page-grid"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="background-glow background-glow-one"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="background-glow background-glow-two"
+    aria-hidden="true"
+  ></div>
+
+  <!-- =========================
+       CABEÇALHO
+  ========================== -->
+
+  <header class="site-header">
+    <div class="container header-content">
+      <a
+        class="brand"
+        href="#inicio"
+        aria-label="Voltar ao início"
+      >
+        <span class="brand-symbol">
+          MJ
+        </span>
+
+        <span class="brand-text">
+          Matheus Javier
+        </span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="menu-principal"
+        aria-label="Abrir menu"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav
+        id="menu-principal"
+        class="main-nav"
+        aria-label="Navegação principal"
+      >
+        <a href="#sobre">Sobre</a>
+        <a href="#experiencia">Experiência</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#tecnologias">Tecnologias</a>
+        <a href="#formacao">Formação</a>
+
+        <a
+          class="nav-contact"
+          href="#contato"
+        >
+          Vamos conversar
+        </a>
+      </nav>
     </div>
+  </header>
 
-    <div class="scroll-snap-container">
-        <header class="hero scroll-snap-section">
-            <div class="container">
-                <h1 class="hero-title">
-                    <span class="typing-effect">Matheus Javier</span>
-                    <span>Desenvolvedor Full Stack</span>
-                </h1>
-                <p class="hero-subtitle">Transformando ideias em soluções digitais eficientes</p>
+  <main id="conteudo">
 
-                <div class="hero-links">
-                    <a href="https://linkedin.com/in/matheus-javier" target="_blank" class="btn btn-outline">
-                        <i class="fab fa-linkedin-in"></i> LinkedIn
-                    </a>
-                    <a href="https://github.com/Matheusjavier" target="_blank" class="btn btn-primary">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                </div>
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section
+      id="inicio"
+      class="hero section"
+    >
+      <div class="container hero-layout">
+
+        <div class="hero-content reveal">
+          <div class="availability-badge">
+            <span class="availability-dot"></span>
+            Aberto a oportunidades em desenvolvimento .NET
+          </div>
+
+          <p class="hero-introduction">
+            Olá, eu sou Matheus Javier
+          </p>
+
+          <h1>
+            Desenvolvedor
+            <span>.NET Back-End</span>
+          </h1>
+
+          <p class="hero-description">
+            Desenvolvo e mantenho sistemas corporativos com foco em
+            <strong>C#</strong>,
+            <strong>VB.NET</strong>,
+            <strong>SQL Server</strong>,
+            APIs, integrações e automação de processos.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              class="button button-primary"
+              href="#projetos"
+            >
+              <i class="fa-solid fa-code"></i>
+              Ver projetos
+            </a>
+
+            <a
+              class="button button-secondary"
+              href="assets/docs/Matheus_Javier_DEV_Curriculo.pdf"
+              download
+            >
+              <i class="fa-solid fa-file-arrow-down"></i>
+              Baixar currículo
+            </a>
+          </div>
+
+          <div class="hero-social">
+            <a
+              href="https://www.linkedin.com/in/matheus-javier/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-linkedin-in"></i>
+              LinkedIn
+            </a>
+
+            <a
+              href="https://github.com/Matheusjavier"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-github"></i>
+              GitHub
+            </a>
+
+            <a href="mailto:matheusjnp14@gmail.com">
+              <i class="fa-regular fa-envelope"></i>
+              E-mail
+            </a>
+          </div>
+        </div>
+
+        <aside
+          class="professional-panel reveal"
+          aria-label="Resumo profissional"
+        >
+          <div class="panel-header">
+            <div>
+              <p class="panel-label">
+                Perfil profissional
+              </p>
+
+              <h2>
+                Desenvolvedor orientado a negócios
+              </h2>
             </div>
+
+            <span class="panel-status">
+              Online
+            </span>
+          </div>
+
+          <div class="professional-data">
+            <div class="data-row">
+              <span>Especialidade</span>
+              <strong>Back-End .NET</strong>
+            </div>
+
+            <div class="data-row">
+              <span>Experiência atual</span>
+              <strong>Sistemas corporativos</strong>
+            </div>
+
+            <div class="data-row">
+              <span>Principais áreas</span>
+              <strong>APIs e integrações</strong>
+            </div>
+
+            <div class="data-row">
+              <span>Banco de dados</span>
+              <strong>SQL Server</strong>
+            </div>
+
+            <div class="data-row">
+              <span>Localização</span>
+              <strong>São Bernardo do Campo</strong>
+            </div>
+          </div>
+
+          <div class="panel-stack">
+            <span>C#</span>
+            <span>VB.NET</span>
+            <span>.NET</span>
+            <span>SQL Server</span>
+            <span>REST APIs</span>
+          </div>
+
+          <div class="panel-footer">
+            <div class="panel-footer-icon">
+              <i class="fa-solid fa-terminal"></i>
+            </div>
+
+            <div>
+              <span>Objetivo atual</span>
+
+              <strong>
+                Evoluir como Desenvolvedor Back-End .NET
+              </strong>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <a
+        class="scroll-hint"
+        href="#sobre"
+        aria-label="Ir para a próxima seção"
+      >
+        <span>Role para explorar</span>
+        <i class="fa-solid fa-arrow-down"></i>
+      </a>
+    </section>
+
+    <!-- =========================
+         SOBRE
+    ========================== -->
+
+    <section
+      id="sobre"
+      class="section section-surface"
+    >
+      <div class="container">
+        <header class="section-header reveal">
+          <div class="section-number">
+            01
+          </div>
+
+          <div>
+            <p class="section-label">
+              Sobre mim
+            </p>
+
+            <h2>
+              Tecnologia aplicada a problemas reais
+            </h2>
+          </div>
         </header>
 
-        <section id="sobre" class="scroll-snap-section bg-light">
-            <div class="container">
-                <h2>Sobre Mim</h2>
-                <div class="grid-2-col">
-                    <div class="about-content">
-                        <p><strong>Desenvolvedor Full Stack com expertise em .NET e JavaScript</strong>, migrei da área
-                            da
-                            Saúde para Tecnologia aplicando minha visão analítica no desenvolvimento de soluções.</br>
-                            Destaques
-                            na Proclinic Software:</p>
+        <div class="about-layout">
+          <div class="about-description reveal">
+            <p class="about-highlight">
+              Sou Desenvolvedor .NET Júnior com experiência profissional
+              em manutenção, evolução e integração de sistemas corporativos.
+            </p>
 
-                        <ul class="achievement-list">
-                            <li>Otimização de processos internos (30% de ganho de eficiência)</li>
-                            <li>Desenvolvimento de diversos sistemas corporativos de ponta a ponta</li>
-                            <li>Integração de APIs RESTful para sistemas legados</li>
-                        </ul>
+            <p>
+              Atualmente trabalho com aplicações em
+              <strong>VB.NET</strong>,
+              <strong>C#</strong>,
+              <strong>.NET Framework/Core</strong>,
+              <strong>Windows Forms</strong>
+              e <strong>SQL Server</strong>, atuando em regras de negócio,
+              APIs externas, mensageria, automações e processamento de dados.
+            </p>
 
-                        <p> Stack principal: <strong>C#</strong>, <strong>.NET Core</strong>,</br><strong>SQL
-                                Server</strong>
-                            (backend) e <strong>JavaScript</strong>, <strong>HTML5</strong>, <strong>CSS3</strong>
-                            (frontend).</p>
+            <p>
+              Em estudos e projetos pessoais também desenvolvo interfaces
+              utilizando <strong>HTML</strong>, <strong>CSS</strong>,
+              <strong>JavaScript</strong> e <strong>Angular</strong>,
+              ampliando minha visão sobre aplicações web.
+            </p>
 
-                        <ul class="education-list">
-                            <li>Análise e Desenvolvimento de Sistemas - Fatec</li>
-                            <li>Certificações em desenvolvimento fullstack</li>
-                        </ul>
+            <p>
+              Minha trajetória anterior na área administrativa contribuiu
+              para desenvolver uma visão analítica sobre processos,
+              organização e necessidades do usuário.
+            </p>
 
-                        <p class="cta">Disponível para discutir como posso agregar à sua equipe:
-                            <a href="#contato" class="cta-link">Entre em Contato</a>
-                        </p>
-                    </div>
-                    <div class="about-highlights">
-                        <div class="highlight-card">
-                            <i class="fas fa-code"></i>
-                            <h4>+ de 20 Projetos</h4>
-                            <p>Desenvolvidos em ambientes acadêmicos e profissionais</p>
-                        </div>
-                        <div class="highlight-card">
-                            <i class="fas fa-project-diagram"></i>
-                            <h4>Full Stack</h4>
-                            <p>Experiência tanto em front-end quanto back-end</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <p>
+              Busco continuar evoluindo em arquitetura de software,
+              testes automatizados, Entity Framework, CI/CD e cloud.
+            </p>
+          </div>
 
-        <section id="habilidades" class="scroll-snap-section bg-light">
-            <div class="container">
-                <h2>Habilidades</h2>
+          <div class="about-features reveal">
+            <article class="feature-card spotlight-card">
+              <div class="feature-icon">
+                <i class="fa-solid fa-server"></i>
+              </div>
 
-                <div class="habilidades-grupo">
-                    <h3>Tecnologias Principais</h3>
-                    <div class="habilidades-grid">
-                        <div class="habilidade">
-                            <img src="assets/images/csharp-logo.png" alt="C#" class="habilidade-imagem">
-                            <p>C#</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/dotnet-logo.png" alt=".NET" class="habilidade-imagem">
-                            <p>.NET</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/sql-server-logo.png" alt="SQL Server" class="habilidade-imagem">
-                            <p>SQL Server</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/html-logo.png" alt="HTML" class="habilidade-imagem">
-                            <p>HTML5</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/css-logo.png" alt="CSS" class="habilidade-imagem">
-                            <p>CSS3</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/javascript-logo.png" alt="JavaScript" class="habilidade-imagem">
-                            <p>JavaScript</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/java.png" alt="Java" class="habilidade-imagem">
-                            <p>Java</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/python.png" alt="Python" class="habilidade-imagem">
-                            <p>Python</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/node.png" alt="Node" class="habilidade-imagem">
-                            <p>Node</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/react.png" alt="React" class="habilidade-imagem">
-                            <p>React</p>
-                        </div>
-                    </div>
-                </div>
+              <div>
+                <h3>Back-End</h3>
 
-                <div class="habilidades-grupo">
-                    <h3>Outras Tecnologias</h3>
-                    <div class="habilidades-grid">
-                        <div class="habilidade">
-                            <img src="assets/images/git-logo.png" alt="Git" class="habilidade-imagem">
-                            <p>Git</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/github-logo.png" alt="GitHub" class="habilidade-imagem">
-                            <p>GitHub</p>
-                        </div>
-                        <div class="habilidade">
-                            <img src="assets/images/office.png" alt="Office" class="habilidade-imagem">
-                            <p>Office 365</p>
-                        </div>
-                        <div class="habilidade">
-                            <i class="fab fa-bootstrap"></i>
-                            <p>Bootstrap</p>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </section>
+                <p>
+                  Desenvolvimento de regras de negócio, serviços,
+                  APIs e integrações.
+                </p>
+              </div>
+            </article>
 
-        <section id="experiencia" class="scroll-snap-section bg-light">
-            <div class="container">
-                <h2>Experiência Profissional</h2>
+            <article class="feature-card spotlight-card">
+              <div class="feature-icon">
+                <i class="fa-solid fa-database"></i>
+              </div>
 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">2025 - Atual</div>
-                        <div class="timeline-content">
-                            <h3>Estágio de Desenvolvedor Full Stack - Proclinic Software</h3>
-                            <ul>
-                                <li>Desenvolvimento de sistemas web com C#, .NET Core e SQL Server</li>
-                                <li>Criação de interfaces responsivas com HTML5, CSS3 e JavaScript</li>
-                                <li>Implementação de APIs RESTful para integração entre sistemas</li>
-                                <li>Participação ativa em cerimônias Scrum</li>
-                            </ul>
-                        </div>
-                    </div>
+              <div>
+                <h3>Banco de dados</h3>
 
-                    <div class="timeline-item">
-                        <div class="timeline-date">2018 - 2023</div>
-                        <div class="timeline-content">
-                            <h3>Auxiliar Administrativo - SPDM</h3>
-                            <ul>
-                                <li>Automação de processos com Excel VBA</li>
-                                <li>Organização de documentação digital</li>
-                                <li>Suporte operacional para diversos setores</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <p>
+                  Consultas, procedures, views e rotinas em SQL Server.
+                </p>
+              </div>
+            </article>
 
-        <section id="formacao" class="scroll-snap-section bg-light">
-            <div class="container">
-                <h2>Formação Acadêmica</h2>
+            <article class="feature-card spotlight-card">
+              <div class="feature-icon">
+                <i class="fa-solid fa-window-restore"></i>
+              </div>
 
-                <div class="formacao-grid">
-                    <div class="formacao-card">
-                        <h3>Fatec São Caetano do Sul Antonio Russo</h3>
-                        <p class="formacao-curso">Técnologo em Análise e Desenvolvimento de Sistemas</p>
-                        <p class="formacao-periodo">2023 - 2026 (Previsão)</p>
-                    </div>
+              <div>
+                <h3>Interfaces e aplicações</h3>
 
-                    <div class="formacao-card">
-                        <h3>UNIP</h3>
-                        <p class="formacao-curso">Bacharelado em Nutrição</p>
-                        <p class="formacao-periodo">2016 - 2022</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <p>
+                  WinForms em aplicações desktop e tecnologias web
+                  em estudos e projetos pessoais.
+                </p>
+              </div>
+            </article>
 
-        <section id="contato" class="scroll-snap-section bg-light">
-            <div class="container">
-                <h2>Vamos Conversar</h2>
-                <div class="contato-content">
-                    <div class="contato-info">
-                        <div class="info-item">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:matheusjnp14@gmail.com">matheusjnp14@gmail.com</a>
-                        </div>
-                        <div class="info-item">
-                            <i class="fab fa-whatsapp"></i>
-                            <a href="https://wa.me/5511954180749" target="_blank">(11) 95418-0749</a>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>São Bernardo do Campo - SP</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-file-download"></i>
-                            <a href="assets/docs/Matheus_Javier_DEV_Currículo.pdf" download class="download-link">Download
-                                Currículo (PDF)</a>
-                        </div>
-                    </div>
+            <article class="feature-card spotlight-card">
+              <div class="feature-icon">
+                <i class="fa-solid fa-gears"></i>
+              </div>
 
-                    <form class="contato-form">
-                        <input type="hidden" name="_subject" value="Novo contato do portfólio">
-                        <input type="hidden" name="_template" value="table">
-                        <input type="text" name="_honey" style="display:none">
+              <div>
+                <h3>Sistemas corporativos</h3>
 
-                        <div class="form-group">
-                            <input type="text" name="name" placeholder="Seu nome completo" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="email" placeholder="Seu e-mail" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="message" placeholder="Sua mensagem" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <footer class="scroll-snap-section">
-            <div class="container">
-                <p>&copy; <span id="year"></span> Matheus Javier. Todos os direitos reservados.</p>
-                <div class="social-links">
-                    <a href="https://linkedin.com/in/matheus-javier" target="_blank"><i
-                            class="fab fa-linkedin-in"></i></a>
-                    <a href="https://github.com/Matheusjavier" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="mailto:matheusjnp14@gmail.com"><i class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <div class="scroll-nav-dots"></div>
-
-    <div class="skill-popup" id="skillPopup">
-        <div class="skill-popup-content">
-            <button class="skill-popup-close" id="skillPopupClose">&times;</button>
-            <h3 id="skillPopupTitle">Título da Habilidade</h3>
-            <p id="skillPopupDesc">Descrição do seu nível e experiência</p>
-
-            <div class="skill-level">
-                <div class="skill-level-bar">
-                    <div class="skill-level-progress" id="skillPopupProgress"></div>
-                </div>
-                <div class="skill-level-text" id="skillPopupLevel">Avançado</div>
-            </div>
+                <p>
+                  Sustentação, correção de bugs, mensageria e automações.
+                </p>
+              </div>
+            </article>
+          </div>
         </div>
-    </div>
-    <script src="js/form-submit.js"></script>
-    <script src="js/main.js"></script>
-</body>
+      </div>
+    </section>
 
+    <!-- =========================
+         EXPERIÊNCIA
+    ========================== -->
+
+    <section
+      id="experiencia"
+      class="section"
+    >
+      <div class="container">
+        <header class="section-header reveal">
+          <div class="section-number">
+            02
+          </div>
+
+          <div>
+            <p class="section-label">
+              Experiência profissional
+            </p>
+
+            <h2>
+              Construindo experiência em ambientes corporativos
+            </h2>
+          </div>
+        </header>
+
+        <div class="experience-list">
+
+          <article class="experience-card spotlight-card reveal">
+            <div class="experience-sidebar">
+              <span class="experience-period">
+                Ago/2025 — Atual
+              </span>
+
+              <span class="current-job">
+                Posição atual
+              </span>
+            </div>
+
+            <div class="experience-main">
+              <div class="experience-title">
+                <div>
+                  <h3>
+                    Desenvolvedor .NET Júnior
+                  </h3>
+
+                  <p class="company-name">
+                    Comunikime
+                  </p>
+                </div>
+
+                <span class="work-model">
+                  Híbrido
+                </span>
+              </div>
+
+              <p class="experience-summary">
+                Desenvolvimento e sustentação de sistemas corporativos
+                voltados a CRM, mensageria, integrações e automação.
+              </p>
+
+              <ul class="experience-details">
+                <li>
+                  Desenvolvimento e manutenção de aplicações utilizando
+                  VB.NET, C#, .NET Framework/Core, Windows Forms e SQL Server.
+                </li>
+
+                <li>
+                  Integração com APIs REST, webservices e plataformas externas.
+                </li>
+
+                <li>
+                  Implementação de regras de negócio, processamento em lote,
+                  logs e tratamento de erros.
+                </li>
+
+                <li>
+                  Criação e manutenção de procedures, consultas e rotinas
+                  de banco de dados.
+                </li>
+
+                <li>
+                  Correção de bugs, testes e documentação técnica.
+                </li>
+              </ul>
+
+              <div class="experience-technologies">
+                <span>VB.NET</span>
+                <span>C#</span>
+                <span>.NET</span>
+                <span>WinForms</span>
+                <span>SQL Server</span>
+                <span>APIs REST</span>
+                <span>Postman</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="experience-card spotlight-card reveal">
+            <div class="experience-sidebar">
+              <span class="experience-period">
+                Jan/2025 — Jul/2025
+              </span>
+            </div>
+
+            <div class="experience-main">
+              <div class="experience-title">
+                <div>
+                  <h3>
+                    Estagiário de Desenvolvimento
+                  </h3>
+
+                  <p class="company-name">
+                    Proclinic Software
+                  </p>
+                </div>
+              </div>
+
+              <p class="experience-summary">
+                Participação na evolução de sistemas corporativos
+                e migração de aplicações legadas para ambiente web.
+              </p>
+
+              <ul class="experience-details">
+                <li>
+                  Desenvolvimento com C#, .NET, SQL Server,
+                  HTML, CSS e JavaScript.
+                </li>
+
+                <li>
+                  Apoio na migração de aplicações desktop
+                  e legadas para soluções web.
+                </li>
+
+                <li>
+                  Integração com APIs REST e testes utilizando Postman.
+                </li>
+
+                <li>
+                  Controle de versão e colaboração utilizando Git.
+                </li>
+              </ul>
+
+              <div class="experience-technologies">
+                <span>C#</span>
+                <span>.NET Core</span>
+                <span>SQL Server</span>
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+                <span>Git</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="experience-card spotlight-card reveal">
+            <div class="experience-sidebar">
+              <span class="experience-period">
+                2018 — 2023
+              </span>
+            </div>
+
+            <div class="experience-main">
+              <div class="experience-title">
+                <div>
+                  <h3>
+                    Auxiliar Administrativo
+                  </h3>
+
+                  <p class="company-name">
+                    SPDM
+                  </p>
+                </div>
+              </div>
+
+              <p class="experience-summary">
+                Experiência administrativa que fortaleceu minha visão
+                sobre processos, organização e atendimento ao usuário.
+              </p>
+
+              <ul class="experience-details">
+                <li>
+                  Automação de rotinas administrativas utilizando Excel e VBA.
+                </li>
+
+                <li>
+                  Organização e controle de documentação digital.
+                </li>
+
+                <li>
+                  Suporte operacional e atendimento a diferentes setores.
+                </li>
+              </ul>
+
+              <div class="experience-technologies">
+                <span>Excel</span>
+                <span>VBA</span>
+                <span>Processos</span>
+                <span>Análise de dados</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         PROJETOS
+    ========================== -->
+
+    <section
+      id="projetos"
+      class="section section-surface"
+    >
+      <div class="container">
+        <header class="section-header reveal">
+          <div class="section-number">
+            03
+          </div>
+
+          <div>
+            <p class="section-label">
+              Projetos selecionados
+            </p>
+
+            <h2>
+              Código que demonstra minha evolução
+            </h2>
+          </div>
+        </header>
+
+        <article class="featured-project spotlight-card reveal">
+          <div class="project-visual">
+            <div class="project-window">
+              <div class="project-window-header">
+                <div class="project-window-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+                <span>
+                  TaskManagement.Api
+                </span>
+              </div>
+
+              <div class="architecture-preview">
+                <div class="architecture-layer">
+                  <i class="fa-solid fa-globe"></i>
+
+                  <span>
+                    API
+                  </span>
+                </div>
+
+                <i class="fa-solid fa-arrow-down architecture-arrow"></i>
+
+                <div class="architecture-layer">
+                  <i class="fa-solid fa-diagram-project"></i>
+
+                  <span>
+                    Application
+                  </span>
+                </div>
+
+                <i class="fa-solid fa-arrow-down architecture-arrow"></i>
+
+                <div class="architecture-row">
+                  <div class="architecture-layer">
+                    <i class="fa-solid fa-cube"></i>
+
+                    <span>
+                      Domain
+                    </span>
+                  </div>
+
+                  <div class="architecture-layer">
+                    <i class="fa-solid fa-database"></i>
+
+                    <span>
+                      Infra
+                    </span>
+                  </div>
+                </div>
+
+                <div class="architecture-tests">
+                  <i class="fa-solid fa-flask"></i>
+                  Testes unitários
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="featured-project-content">
+            <div class="project-heading">
+              <span class="project-category">
+                Projeto em destaque
+              </span>
+
+              <h3>
+                Task Management API
+              </h3>
+            </div>
+
+            <p>
+              API REST para gerenciamento de tarefas desenvolvida
+              em .NET 8, aplicando separação de responsabilidades,
+              validações, injeção de dependência e testes automatizados.
+            </p>
+
+            <ul class="project-features">
+              <li>
+                CRUD completo de tarefas
+              </li>
+
+              <li>
+                Filtros por status e data
+              </li>
+
+              <li>
+                Pesquisa por título ou descrição
+              </li>
+
+              <li>
+                Tratamento global de erros
+              </li>
+
+              <li>
+                Documentação com Swagger
+              </li>
+
+              <li>
+                Testes unitários com xUnit e Moq
+              </li>
+            </ul>
+
+            <div class="project-technologies">
+              <span>.NET 8</span>
+              <span>ASP.NET Core</span>
+              <span>EF Core</span>
+              <span>Swagger</span>
+              <span>xUnit</span>
+              <span>Moq</span>
+            </div>
+
+            <div class="project-actions">
+              <a
+                class="button button-primary"
+                href="https://github.com/Matheusjavier/TaskManagement"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i class="fa-brands fa-github"></i>
+                Ver repositório
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <div class="secondary-projects">
+          <article class="project-card spotlight-card reveal">
+            <div class="project-card-header">
+              <div class="project-icon">
+                <i class="fa-solid fa-plug"></i>
+              </div>
+
+              <span class="project-type">
+                Experiência profissional
+              </span>
+            </div>
+
+            <h3>
+              Integrações corporativas
+            </h3>
+
+            <p>
+              Desenvolvimento de rotinas para consumo de APIs externas,
+              validação de respostas, atualização de dados e tratamento
+              de exceções.
+            </p>
+
+            <div class="project-technologies">
+              <span>C#</span>
+              <span>VB.NET</span>
+              <span>REST</span>
+              <span>SQL Server</span>
+              <span>JSON</span>
+            </div>
+
+            <p class="confidential-note">
+              Informações apresentadas sem dados confidenciais.
+            </p>
+          </article>
+
+          <article class="project-card spotlight-card reveal">
+            <div class="project-card-header">
+              <div class="project-icon">
+                <i class="fa-solid fa-window-restore"></i>
+              </div>
+
+              <span class="project-type">
+                Estudos e projetos pessoais
+              </span>
+            </div>
+
+            <h3>
+              Aplicações desktop e interfaces web
+            </h3>
+
+            <p>
+              Desenvolvimento de interfaces para aplicações desktop
+              com Windows Forms e criação de páginas e protótipos web
+              responsivos em projetos de estudo.
+            </p>
+
+            <div class="project-technologies">
+              <span>WinForms</span>
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>JavaScript</span>
+              <span>Angular</span>
+            </div>
+
+            <p class="confidential-note">
+              Angular utilizado em estudos e projetos pessoais.
+            </p>
+          </article>
+
+          <article class="project-card spotlight-card reveal">
+            <div class="project-card-header">
+              <div class="project-icon">
+                <i class="fa-solid fa-boxes-stacked"></i>
+              </div>
+
+              <span class="project-type">
+                Projeto acadêmico
+              </span>
+            </div>
+
+            <h3>
+              Sistema de Inventário
+            </h3>
+
+            <p>
+              Aplicação para cadastro, organização e consulta
+              de itens de inventário, aplicando orientação a objetos
+              e persistência de dados.
+            </p>
+
+            <div class="project-technologies">
+              <span>Java</span>
+              <span>MySQL</span>
+              <span>POO</span>
+            </div>
+
+            <p class="confidential-note">
+              Repositório em organização para publicação.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         TECNOLOGIAS
+    ========================== -->
+
+    <section
+      id="tecnologias"
+      class="section"
+    >
+      <div class="container">
+        <header class="section-header reveal">
+          <div class="section-number">
+            04
+          </div>
+
+          <div>
+            <p class="section-label">
+              Tecnologias
+            </p>
+
+            <h2>
+              Ferramentas que utilizo no desenvolvimento
+            </h2>
+          </div>
+        </header>
+
+        <div class="technology-layout">
+
+          <article class="technology-group spotlight-card reveal">
+            <div class="technology-heading">
+              <div class="technology-icon">
+                <i class="fa-solid fa-server"></i>
+              </div>
+
+              <div>
+                <span>Principal</span>
+                <h3>Back-End</h3>
+              </div>
+            </div>
+
+            <div class="technology-list">
+              <span>C#</span>
+              <span>VB.NET</span>
+              <span>.NET Framework</span>
+              <span>.NET Core</span>
+              <span>ASP.NET Core</span>
+              <span>Entity Framework</span>
+              <span>APIs REST</span>
+              <span>Web Services</span>
+            </div>
+          </article>
+
+          <article class="technology-group spotlight-card reveal">
+            <div class="technology-heading">
+              <div class="technology-icon">
+                <i class="fa-solid fa-database"></i>
+              </div>
+
+              <div>
+                <span>Dados</span>
+                <h3>Banco de dados</h3>
+              </div>
+            </div>
+
+            <div class="technology-list">
+              <span>SQL Server</span>
+              <span>Stored Procedures</span>
+              <span>Views</span>
+              <span>Modelagem</span>
+              <span>MySQL</span>
+            </div>
+          </article>
+
+          <article class="technology-group spotlight-card reveal">
+            <div class="technology-heading">
+              <div class="technology-icon">
+                <i class="fa-solid fa-window-restore"></i>
+              </div>
+
+              <div>
+                <span>Desktop e Web</span>
+                <h3>Interfaces</h3>
+              </div>
+            </div>
+
+            <div class="technology-list">
+              <span>Windows Forms</span>
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>JavaScript</span>
+              <span>Bootstrap</span>
+              <span>jQuery</span>
+              <span>Angular — Estudos</span>
+            </div>
+          </article>
+
+          <article class="technology-group spotlight-card reveal">
+            <div class="technology-heading">
+              <div class="technology-icon">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+              </div>
+
+              <div>
+                <span>Ambiente</span>
+                <h3>Ferramentas</h3>
+              </div>
+            </div>
+
+            <div class="technology-list">
+              <span>Visual Studio</span>
+              <span>VS Code</span>
+              <span>Postman</span>
+              <span>Swagger</span>
+              <span>Git</span>
+              <span>GitHub</span>
+              <span>TortoiseSVN</span>
+              <span>Azure DevOps</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         FORMAÇÃO
+    ========================== -->
+
+    <section
+      id="formacao"
+      class="section section-surface"
+    >
+      <div class="container">
+        <header class="section-header reveal">
+          <div class="section-number">
+            05
+          </div>
+
+          <div>
+            <p class="section-label">
+              Formação
+            </p>
+
+            <h2>
+              Aprendizado contínuo e visão multidisciplinar
+            </h2>
+          </div>
+        </header>
+
+        <div class="education-list">
+
+          <article class="education-item spotlight-card reveal">
+            <div class="education-year">
+              2026
+            </div>
+
+            <div class="education-content">
+              <span>
+                Graduação
+              </span>
+
+              <h3>
+                Análise e Desenvolvimento de Sistemas
+              </h3>
+
+              <p>
+                Universidade Anhembi Morumbi
+              </p>
+            </div>
+
+            <div class="education-status">
+              Concluído
+            </div>
+          </article>
+
+          <article class="education-item spotlight-card reveal">
+            <div class="education-year">
+              2022
+            </div>
+
+            <div class="education-content">
+              <span>
+                Graduação
+              </span>
+
+              <h3>
+                Bacharelado em Nutrição
+              </h3>
+
+              <p>
+                Universidade Paulista — UNIP
+              </p>
+            </div>
+
+            <div class="education-status">
+              Concluído
+            </div>
+          </article>
+
+          <article class="education-item spotlight-card reveal">
+            <div class="education-year">
+              DIO
+            </div>
+
+            <div class="education-content">
+              <span>
+                Formação complementar
+              </span>
+
+              <h3>
+                Java Developer e Python Developer
+              </h3>
+
+              <p>
+                Bootcamps de desenvolvimento de software
+              </p>
+            </div>
+
+            <div class="education-status">
+              Bootcamps
+            </div>
+          </article>
+
+          <article class="education-item spotlight-card reveal">
+            <div class="education-year">
+              LATAM
+            </div>
+
+            <div class="education-content">
+              <span>
+                Idiomas
+              </span>
+
+              <h3>
+                Espanhol avançado e inglês técnico
+              </h3>
+
+              <p>
+                Aprimoramento contínuo para atuação internacional
+              </p>
+            </div>
+
+            <div class="education-status">
+              Em evolução
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         CONTATO
+    ========================== -->
+
+    <section
+      id="contato"
+      class="section contact-section"
+    >
+      <div class="container">
+        <div class="contact-card spotlight-card reveal">
+          <div class="contact-introduction">
+            <span class="contact-number">
+              06
+            </span>
+
+            <p class="section-label">
+              Contato
+            </p>
+
+            <h2>
+              Tem uma oportunidade ou projeto em mente?
+            </h2>
+
+            <p>
+              Estou aberto a conversar sobre oportunidades em desenvolvimento
+              .NET, principalmente em back-end, APIs, integrações,
+              sistemas corporativos e banco de dados.
+            </p>
+          </div>
+
+          <div class="contact-options">
+            <a
+              class="contact-option"
+              href="mailto:matheusjnp14@gmail.com"
+            >
+              <span class="contact-option-icon">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+
+              <span>
+                <small>E-mail</small>
+
+                <strong>
+                  matheusjnp14@gmail.com
+                </strong>
+              </span>
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+
+            <a
+              class="contact-option"
+              href="https://www.linkedin.com/in/matheus-javier/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="contact-option-icon">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </span>
+
+              <span>
+                <small>LinkedIn</small>
+
+                <strong>
+                  Matheus Javier
+                </strong>
+              </span>
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+
+            <a
+              class="contact-option"
+              href="https://github.com/Matheusjavier"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="contact-option-icon">
+                <i class="fa-brands fa-github"></i>
+              </span>
+
+              <span>
+                <small>GitHub</small>
+
+                <strong>
+                  @Matheusjavier
+                </strong>
+              </span>
+
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================
+       RODAPÉ
+  ========================== -->
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <strong>
+          Matheus Javier
+        </strong>
+
+        <p>
+          Desenvolvedor .NET focado em soluções corporativas.
+        </p>
+      </div>
+
+      <p class="footer-copyright">
+        © <span id="current-year"></span>
+        Desenvolvido com HTML, CSS e JavaScript.
+      </p>
+
+      <a
+        class="back-to-top"
+        href="#inicio"
+        aria-label="Voltar ao topo"
+      >
+        <i class="fa-solid fa-arrow-up"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
 </html>
