@@ -2324,57 +2324,59 @@ ul {
   */
 
   .main-nav {
-    position: fixed;
-    top: var(--header-height);
-    right: 0;
-    bottom: 0;
-    z-index: 1003;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1003;
 
-    width: min(88vw, 340px);
-    max-width: calc(100vw - 32px);
+  width: min(88vw, 340px);
+  max-width: calc(100vw - 28px);
+  height: calc(100vh - var(--header-height));
+  height: calc(100dvh - var(--header-height));
 
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 5px;
 
-    padding: 24px;
+  padding: 24px;
 
-    background: rgba(5, 10, 18, 0.995);
+  background: rgba(5, 10, 18, 0.995);
 
-    border-left: 1px solid var(--border);
+  border: 1px solid var(--border);
+  border-top: 0;
+  border-radius: 0 0 0 18px;
 
-    box-shadow: -20px 30px 60px rgba(0, 0, 0, 0.36);
+  box-shadow: -20px 30px 60px rgba(0, 0, 0, 0.36);
 
-    overflow-x: hidden;
-    overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 
-    overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+  transform: translateY(-10px) scale(0.98);
+  transform-origin: top right;
 
-    transform: scale(0.985);
-    transform-origin: top right;
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease,
+    visibility 0s linear 220ms;
+}
 
-    transition:
-      opacity 180ms ease,
-      transform 220ms ease,
-      visibility 0s linear 220ms;
-  }
+.main-nav.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 
-  .main-nav.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+  transform: translateY(0) scale(1);
 
-    transform: scale(1);
-
-    transition:
-      opacity 180ms ease,
-      transform 220ms ease;
-  }
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease;
+}
 
   .main-nav a {
     width: 100%;
