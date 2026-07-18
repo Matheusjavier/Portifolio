@@ -641,11 +641,13 @@ ul {
 .hero h1 {
   max-width: 760px;
 
-  overflow-wrap: break-word;
-
-  font-size: clamp(3.2rem, 7vw, 6.1rem);
+  font-size: clamp(3.2rem, 6vw, 5.4rem);
   line-height: 0.98;
   letter-spacing: -0.065em;
+
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .hero h1 span {
